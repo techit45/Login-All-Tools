@@ -1,0 +1,1885 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGIN LEARNING Co. - เรียนรู้และเติบโตด้านวิศวกรรม</title>
+    <script src="https://cdn.tailwindcss.com"></script> <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"> <style>
+        /* General Styles */
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8; /* Light Grayish Blue */
+            color: #333; /* Dark Gray */
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            overflow: hidden; /* To contain floats */
+        }
+
+        h1, h2, h3, h4, h5 {
+            color: #003366; /* Dark Navy Blue */
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(90deg, #003366 0%, #005a9c 100%); /* Dark Navy to Medium Blue gradient */
+            color: #ffffff; /* White */
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 60px;
+            width: auto;
+            max-width: 220px;
+            transition: transform 0.3s ease;
+        }
+        .logo img:hover {
+            transform: scale(1.05);
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            color: #ffffff; /* White */
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 20px; /* Rounded pill shape for links */
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        nav ul li a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background-color: #87cefa; /* Light Sky Blue */
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        nav ul li a:hover,
+        nav ul li a.active {
+            background-color: rgba(255,255,255,0.1); /* Slight white transparent background */
+            color: #e0f7fa; /* Lighter Cyan */
+            box-shadow: 0 0 10px rgba(135, 206, 250, 0.5); /* Light blue glow */
+        }
+        nav ul li a:hover::before,
+        nav ul li a.active::before {
+            width: 70%;
+        }
+
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 51, 102, 0.85), rgba(0, 90, 156, 0.75)), url('https://www.dia.co.th/wp-content/uploads/2024/08/dIA-Jun-3-2.jpg') no-repeat center center;
+            background-size: cover;
+            color: #ffffff; /* White */
+            padding: 6rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: #ffffff; /* White */
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #007bff, #0056b3); /* Bright Blue to Darker Blue gradient */
+            color: #ffffff; /* White */
+            padding: 18px 35px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px; /* Pill shape */
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background: linear-gradient(45deg, #0056b3, #007bff); /* Reversed gradient on hover */
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.5);
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 4rem 0;
+        }
+        .section:not(:last-of-type) {
+            border-bottom: 1px solid #dde4e9; /* Light Gray border */
+        }
+
+
+        .section-title { 
+            text-align: center;
+            font-size: 2.5rem; 
+            margin-bottom: 1.8rem;
+            color: #005a9c; /* Medium Blue */
+            padding-bottom: 0.8rem;
+            border-bottom: 3px solid #007bff; /* Bright Blue underline */
+            display: inline-block; 
+            font-weight: 600;
+        }
+        .section-title-wrapper { 
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+
+        /* Faculty Category Block */
+        .faculty-category-block {
+            background-color: #ffffff; /* White */
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            box-shadow: 0 8px 25px rgba(0, 90, 156, 0.1); /* Soft shadow */
+        }
+        .faculty-category-block:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Program Card Styling (New Template for ALL sections) */
+        .program-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+            gap: 30px;
+        }
+
+        .program-card-new {
+            background-color: #ffffff; /* White */
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 90, 156, 0.12); /* Subtle shadow */
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .program-card-new:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 90, 156, 0.18); /* Enhanced shadow on hover */
+        }
+
+        .program-card-new-header {
+            background: linear-gradient(135deg, #005a9c 0%, #007bff 100%); /* Medium Blue to Bright Blue gradient */
+            color: #ffffff; /* White */
+            padding: 18px 25px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+        .program-card-new-header img.program-card-logo {
+            height: 55px;
+            width: 55px;
+            object-fit: contain;
+            background-color: rgba(255,255,255,0.9); /* Semi-transparent white background for logo */
+            border-radius: 50%; 
+            padding: 5px;
+            border: 2px solid #ffffff; /* White border for logo */
+        }
+        .program-card-new-header .uni-program-name h5 {
+            margin: 0;
+            font-size: 1.35rem;
+            color: #ffffff; /* White */
+            font-weight: 600;
+        }
+        .program-card-new-header .uni-program-name .program-card-subheader {
+            font-size: 1rem;
+            color: #e0f7fa; /* Lighter Cyan */
+            margin-top: 4px;
+            opacity: 0.9;
+        }
+
+        .program-card-new-body {
+            padding: 25px;
+            display: flex; 
+            flex-direction: column; 
+            flex-grow: 1; 
+        }
+        
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 18px;
+            margin-bottom: 20px;
+        }
+
+        .requirement-block {
+            background-color: #e9f1f6; /* Very Light Blue */
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #d1e3ff; /* Light Blue border */
+        }
+        .requirement-block h6 { 
+            margin: 0 0 10px 0;
+            font-size: 0.95rem;
+            color: #003366; /* Dark Navy Blue */
+            font-weight: 600;
+            border-bottom: 1px solid #b3d1ff; /* Medium Light Blue underline */
+            padding-bottom: 6px;
+        }
+        .requirement-block p, .requirement-block ul {
+            margin: 0;
+            font-size: 0.88rem;
+            color: #334155; /* Slate Gray */
+        }
+        .requirement-block ul {
+            list-style: none; padding-left: 0;
+        }
+        .requirement-block ul li {
+            margin-bottom: 4px;
+        }
+        .requirement-block .score {
+            font-weight: bold;
+            color: #005a9c; /* Medium Blue */
+            font-size: 1.15em;
+        }
+
+        .program-card-new .popular-majors-info { 
+            margin-top: auto; 
+            padding-top: 15px; 
+            text-align: center; 
+            position: relative; /* For popup positioning */
+        }
+        .program-card-new .popular-majors-trigger {
+            background: linear-gradient(45deg, #007bff, #0056b3); /* Bright Blue to Darker Blue */
+            color: white;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+            transition: all 0.3s ease;
+            border: none; /* Ensure no default button border */
+            cursor: default; /* Since it's hover-based */
+            position: relative; /* For popup positioning */
+            display: inline-block;
+        }
+        .program-card-new .popular-majors-trigger:hover {
+            background: linear-gradient(45deg, #0056b3, #007bff);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
+        }
+
+        .popular-majors-popup {
+            display: none; /* Hidden by default */
+            position: absolute;
+            bottom: calc(100% + 10px); /* Position above the trigger */
+            left: 50%; 
+            transform: translateX(-50%); 
+            background-color: #002240; /* Very Dark Blue */
+            color: white;
+            border: 1px solid #004a7c; /* Dark Blue border */
+            border-radius: 8px;
+            padding: 18px; /* User's value */
+            width: 340px;  /* User's value */
+            z-index: 100; /* User's value */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); /* User's value */
+            font-size: 0.88rem; /* User's value */
+            line-height: 1.6; /* User's value */
+            text-align: left; /* User's value */
+        }
+        /* This rule was in user's CSS, it makes the popup appear on hover of the trigger itself */
+        .popular-majors-trigger:hover .popular-majors-popup {
+            display: block;
+        }
+        .popular-majors-popup h5 { /* User changed from h6 to h5 */
+            margin-top: 0;
+            margin-bottom: 12px; /* User's value */
+            font-size: 1.05rem; /* User's value */
+            color: #87cefa; /* Light Sky Blue for popup title */
+            border-bottom: 1px solid #005a9c; /* User's value */
+            padding-bottom: 8px; /* User's value */
+        }
+        .popular-majors-popup ul {
+            list-style: none; /* User's value */
+            padding: 0; /* User's value */
+            margin: 0 0 12px 0; /* User's value */
+        }
+        .popular-majors-popup ul li {
+            margin-bottom: 8px; /* User's value */
+        }
+        .popular-majors-popup ul li strong { /* New style from user */
+            color: #b0e0e6; 
+        }
+        .popular-majors-popup .general-criteria-heading, /* New style from user */
+        .popular-majors-popup .rounds-info-heading {
+            font-weight: bold;
+            color: #add8e6; 
+            margin-top: 12px;
+            margin-bottom: 6px;
+            font-size: 0.9em;
+        }
+        .popular-majors-popup .rounds-info-list li { /* New style from user */
+            font-size: 0.85em;
+        }
+
+        /* Program Card Footer (New from user) */
+        .program-card-new-footer {
+            padding: 18px 25px;
+            background-color: #f8f9fa; 
+            text-align: center;
+            border-top: 1px solid #dde4e9;
+        }
+        .program-card-new-footer .program-card-link {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #28a745, #218838); 
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+        }
+        .program-card-new-footer .program-card-link:hover {
+            background: linear-gradient(45deg, #218838, #28a745);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+        }
+
+        @keyframes fadeIn { /* From user */
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Other sections (Services, Projects, Locations) - From user */
+        .card-container {
+            display: grid; /* Changed to grid for better control */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
+            gap: 30px;
+            justify-content: center; /* Center items if they don't fill the row */
+        }
+        .card {
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px; 
+            box-shadow: 0 8px 20px rgba(0, 90, 156, 0.12); 
+            /* flex-basis removed as grid handles sizing */
+            min-width: 280px; /* Retained for minimum size */
+            box-sizing: border-box;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 90, 156, 0.18); 
+        }
+        .card-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex; /* Added for better content alignment */
+            flex-direction: column; /* Added for better content alignment */
+        }
+        .card-content h4 {
+             margin-bottom: 0.75rem; /* Ensure spacing */
+        }
+        .card-content p {
+            flex-grow: 1; /* Ensure paragraph takes available space */
+            margin-bottom: 0;
+        }
+        .card img.card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px 12px 0 0; 
+            background-color: #e9ecef; /* Fallback background for image */
+        }
+        .card h4 {
+            font-size: 1.4rem;
+            color: #007bff; /* Bright Blue */
+            margin-top: 0;
+            /* margin-bottom: 0.75rem; */ /* Moved to card-content h4 */
+        }
+        .card p {
+            font-size: 1rem;
+            /* margin-bottom: 0; */ /* Moved to card-content p */
+            /* flex-grow: 1; */ /* Moved to card-content p */
+        }
+
+        .locations-grid { /* From user */
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+        .location-item { /* From user */
+            background-color: #ffffff;
+            padding: 1.8rem;
+            border-radius: 12px; 
+            box-shadow: 0 8px 20px rgba(0, 90, 156, 0.12); 
+            text-align: center;
+        }
+        .location-item h4 { /* From user */
+            color: #007bff; /* Bright Blue */
+            font-size: 1.3rem;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(90deg, #002240 0%, #003366 100%); /* Darker gradient from user */
+            color: #ffffff; /* White */
+            text-align: center;
+            padding: 3rem 0; /* Increased padding from user */
+            margin-top: 2rem; /* User's value */
+        }
+        .footer-logos-container { /* From user */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px; 
+            margin-bottom: 1.5rem;
+        }
+        .footer-logo img, .partner-logo img { /* From user */
+            height: 55px;
+            width: auto;
+            max-width: 220px;
+            transition: opacity 0.3s ease;
+        }
+        .footer-logo img:hover, .partner-logo img:hover { /* From user */
+            opacity: 0.85;
+        }
+        .partner-logo img { /* From user */
+            height: 45px; 
+        }
+
+
+        footer p {
+            margin: 0.6rem 0; /* User's value */
+            font-size: 0.95rem; /* User's value */
+            opacity: 0.9; /* User's value */
+        }
+        footer a {
+            color: #87cefa; /* Light Sky Blue */
+            text-decoration: none;
+            transition: color 0.3s ease; /* User's value */
+        }
+        footer a:hover {
+            color: #ffffff; /* User's value */
+            text-decoration: underline;
+        }
+
+        /* QR Code Styling */
+        .line-qr-code {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1001; 
+            border: 2px solid #00B900; /* Line app green color */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            background-color: white;
+            padding: 5px;
+            transition: transform 0.3s ease;
+        }
+        .line-qr-code:hover {
+            transform: scale(1.1);
+        }
+        .line-qr-code img {
+            display: block;
+            width: 100px; /* Adjust size as needed */
+            height: 100px; /* Adjust size as needed */
+        }
+        .line-qr-code p {
+            font-size: 0.75rem;
+            color: #333;
+            margin: 5px 0 0 0;
+            text-align: center;
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) { /* User's breakpoint */
+            .card, .program-card-new { 
+                 /* flex-basis: calc(50% - 20px);  Grid handles this */
+            }
+            .popular-majors-popup {
+                width: 300px; 
+            }
+            .card-container { /* Adjust card container for 2 columns on medium screens */
+                grid-template-columns: repeat(auto-fit, minmax(calc(50% - 15px), 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            header .container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .logo img { /* User's style */
+                margin: 0 auto 1rem auto;
+                display: block;
+            }
+            nav ul {
+                flex-direction: column;
+                align-items: center; /* User's style */
+                width: 100%; /* User's style */
+            }
+            nav ul li {
+                margin: 10px 0; /* User's style */
+                width: 100%; /* User's style */
+                text-align: center; /* User's style */
+            }
+            nav ul li a {
+                display: block; padding: 10px; /* User's style */
+            }
+            .hero h1 { font-size: 2.8rem; }
+            .hero p { font-size: 1.2rem; }
+            .card, .program-card-new {
+                /* flex-basis: 100%; Grid handles this */
+            }
+             .card-container { /* Stack cards on smaller screens */
+                grid-template-columns: 1fr;
+            }
+            .section-title { font-size: 2rem; }
+            
+            .program-card-new-header h5 { font-size: 1.2rem; } /* User's style */
+            .program-card-new-header .program-card-subheader { font-size: 0.9rem; } /* User's style */
+            .program-card-new-body { padding: 20px; } /* User's style */
+            .requirements-grid { grid-template-columns: 1fr; } 
+
+
+            .popular-majors-popup { /* User's responsive style for popup */
+                width: 90%; 
+                left: 5%;
+                transform: translateX(0); 
+                bottom: calc(100% + 8px); 
+            }
+            .popular-majors-trigger { /* User's style */
+                display: block; 
+                text-align: center;
+                margin-bottom: 8px; 
+            }
+            .line-qr-code {
+                bottom: 10px;
+                right: 10px;
+            }
+            .line-qr-code img {
+                width: 80px;
+                height: 80px;
+            }
+        }
+         @media (max-width: 480px) { /* User's breakpoint */
+            .hero h1 { font-size: 2.2rem; }
+            .hero p { font-size: 1.1rem; }
+            .cta-button { padding: 15px 30px; font-size: 1.1rem; } /* User's value */
+            .section-title { font-size: 1.8rem; } /* User's value */
+            .program-card-new-header h5 { font-size: 1.1rem; } /* User's value */
+            .program-card-new-header .program-card-subheader { font-size: 0.85rem; } /* User's value */
+            .logo img { height: 50px; } /* User's value */
+            .footer-logo img, .partner-logo img { height: 40px; } /* User's value */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="#home"><img src="https://placehold.co/220x60/FFFFFF/003366?text=LOGIN+LEARNING+Co.&font=inter" alt="LOGIN LEARNING Co. Logo" onerror="this.onerror=null; this.src='https://placehold.co/220x60/CCCCCC/969696?text=Logo+Not+Found';"></a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home" class="active">หน้าแรก</a></li>
+                    <li><a href="#admission-info">ข้อมูลรับเข้าฯ</a></li>
+                    <li><a href="#services">บริการของเรา</a></li>
+                    <li><a href="#projects">ตัวอย่างโครงงาน</a></li>
+                    <li><a href="#locations">สาขา</a></li>
+                    <li><a href="#contact">ติดต่อเรา</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>LOGIN LEARNING Co.</h1>
+            <p>คอร์สเรียนเสริมทักษะและค้นหาตัวตนของน้องมัธยม ต้น-ปลาย เพื่อตัดสินใจเข้าเรียนต่อในระดับมัธยมปลาย/มหาวิทยาลัย</p>
+            <a href="#services" class="cta-button">ดูบริการของเรา</a>
+        </div>
+    </section>
+
+    <main id="admission-info" class="section">
+        <div class="container">
+            <div class="faculty-category-block">
+                <div class="section-title-wrapper"><h2 class="section-title">คณะวิศวกรรมศาสตร์ (หลักสูตรไทย)</h2></div>
+                <p style="text-align:center; margin-top:-1.5rem; margin-bottom: 2rem;">ข้อมูลเบื้องต้นรอบ Portfolio (โปรดตรวจสอบประกาศล่าสุดจากมหาวิทยาลัย)</p>
+                <div class="program-list">
+                    <article class="program-card-new">
+                        <div class="program-card-new-header">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Logo_of_Chulalongkorn_University.svg/1200px-Logo_of_Chulalongkorn_University.svg.png" alt="จุฬาฯ Logo" class="program-card-logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/005A9C/FFFFFF?text=CU&font=bold';">
+                            <div class="uni-program-name">
+                                <h5>จุฬาลงกรณ์มหาวิทยาลัย</h5>
+                                <div class="program-card-subheader">คณะวิศวกรรมศาสตร์ (หลักสูตรไทย)</div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-body">
+                            <div class="requirements-grid">
+                                <div class="requirement-block"><h6>GPAX (ภาพรวม)</h6><p><span class="score">≥ 3.00-3.50</span></p></div>
+                                <div class="requirement-block"><h6>คะแนนสอบหลัก</h6><p>TPAT3, TGAT</p></div>
+                                <div class="requirement-block"><h6>จำนวนรับรวม (ทุกรอบ)</h6><p>~<span class="score">600-700</span> คน</p></div>
+                                <div class="requirement-block"><h6>ค่าเทอม (โดยประมาณ)</h6><p>~<span class="score">21,000</span> บ./เทอม</p></div>
+                            </div>
+                            <div class="popular-majors-info">
+                                <div class="popular-majors-trigger">ข้อมูลสาขายอดฮิต
+                                    <div class="popular-majors-popup">
+                                        <h5>ตัวอย่างสาขายอดฮิตและเกณฑ์เบื้องต้น (รอบ Portfolio)</h5>
+                                        <ul>
+                                            <li><strong>วิศวกรรมคอมพิวเตอร์:</strong> GPAX ≥ 3.50, Portfolio ผลงานเด่น, TPAT3</li>
+                                            <li><strong>วิศวกรรมไฟฟ้า:</strong> GPAX ≥ 3.25, Portfolio, TPAT3</li>
+                                        </ul>
+                                        <div class="general-criteria-heading">เกณฑ์การยื่น (ภาพรวม)</div>
+                                        <ul><li>Portfolio, คะแนนสอบ (TPAT3, TGAT), สัมภาษณ์</li></ul>
+                                        <div class="rounds-info-heading">จำนวนรับในแต่ละรอบ (โดยประมาณ)</div>
+                                        <ul class="rounds-info-list">
+                                            <li>รอบ 1 Portfolio: ~327 คน</li>
+                                            <li>รอบ 2 Quota: ~38 คน</li>
+                                            <li>รอบ 3 Admission: ~240 คน</li>
+                                            <li>รอบ 4 Direct Admission: N/A</li>
+                                        </ul>
+                                        <p style="font-size:0.75em; opacity:0.8; margin-top:10px;"><em>*เป็นข้อมูลโดยประมาณ ควรตรวจสอบประกาศทางการเสมอ</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-footer">
+                           <a href="https://www.eng.chula.ac.th/" target="_blank" rel="noopener noreferrer" class="program-card-link">เว็บไซต์คณะวิศวกรรมศาสตร์ จุฬาฯ</a>
+                        </div>
+                    </article>
+                    <article class="program-card-new">
+                        <div class="program-card-new-header">
+                            <img src="https://upload.wikimedia.org/wikipedia/th/thumb/5/51/Logo_ku_th.svg/1200px-Logo_ku_th.svg.png" alt="ม.เกษตรฯ Logo" class="program-card-logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/D4A017/FFFFFF?text=KU&font=bold';">
+                            <div class="uni-program-name">
+                                <h5>มหาวิทยาลัยเกษตรศาสตร์</h5>
+                                <div class="program-card-subheader">คณะวิศวกรรมศาสตร์ (หลักสูตรไทย)</div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-body">
+                            <div class="requirements-grid">
+                                <div class="requirement-block"><h6>GPAX (ภาพรวม)</h6><p><span class="score">≥ 2.75-3.25</span></p></div>
+                                <div class="requirement-block"><h6>คะแนนสอบหลัก</h6><p>TPAT3, TGAT</p></div>
+                                <div class="requirement-block"><h6>จำนวนรับรวม (ทุกรอบ)</h6><p>~<span class="score">1400+</span> คน</p></div>
+                                <div class="requirement-block"><h6>ค่าเทอม (โดยประมาณ)</h6><p>~<span class="score">17,000</span> บ./เทอม</p></div>
+                            </div>
+                            <div class="popular-majors-info">
+                                <div class="popular-majors-trigger">ข้อมูลสาขายอดฮิต
+                                    <div class="popular-majors-popup">
+                                        <h5>ตัวอย่างสาขายอดฮิตและเกณฑ์เบื้องต้น (รอบ Portfolio)</h5>
+                                        <ul>
+                                            <li><strong>วิศวกรรมคอมพิวเตอร์:</strong> GPAX ≥ 3.25, Portfolio</li>
+                                            <li><strong>วิศวกรรมการบินและอวกาศ:</strong> GPAX ≥ 3.00, Portfolio</li>
+                                        </ul>
+                                        <div class="general-criteria-heading">เกณฑ์การยื่น (ภาพรวม)</div>
+                                        <ul><li>Portfolio, คะแนนสอบ, สัมภาษณ์</li></ul>
+                                        <div class="rounds-info-heading">จำนวนรับในแต่ละรอบ (โดยประมาณ)</div>
+                                        <ul class="rounds-info-list">
+                                            <li>รอบ 1 Portfolio: ~791 คน</li>
+                                            <li>รอบ 2 Quota: ~181 คน</li>
+                                            <li>รอบ 3 Admission: ~390 คน</li>
+                                            <li>รอบ 4 Direct Admission: ~120 คน</li>
+                                        </ul>
+                                        <p style="font-size:0.75em; opacity:0.8; margin-top:10px;"><em>*เป็นข้อมูลโดยประมาณ</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-footer">
+                           <a href="https://www.eng.ku.ac.th/" target="_blank" rel="noopener noreferrer" class="program-card-link">เว็บไซต์คณะวิศวกรรมศาสตร์ เกษตรฯ</a>
+                        </div>
+                    </article>
+                    <article class="program-card-new">
+                        <div class="program-card-new-header">
+                            <img src="https://upload.wikimedia.org/wikipedia/th/thumb/7/76/Seal_of_King_Mongkut%27s_University_of_Technology_Thonburi.svg/1200px-Seal_of_King_Mongkut%27s_University_of_Technology_Thonburi.svg.png" alt="มจธ. Logo" class="program-card-logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/F28500/FFFFFF?text=KMUTT&font=bold';">
+                            <div class="uni-program-name">
+                                <h5>มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี</h5>
+                                <div class="program-card-subheader">คณะวิศวกรรมศาสตร์ (หลักสูตรไทย)</div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-body">
+                            <div class="requirements-grid">
+                                <div class="requirement-block"><h6>GPAX (ภาพรวม)</h6><p><span class="score">≥ 2.75-3.00</span></p></div>
+                                <div class="requirement-block"><h6>คะแนนสอบหลัก</h6><p>TGAT, TPAT3 (บางโครงการ)</p></div>
+                                <div class="requirement-block"><h6>จำนวนรับรวม (ทุกรอบ)</h6><p>~<span class="score">900+</span> คน</p></div>
+                                <div class="requirement-block"><h6>ค่าเทอม (โดยประมาณ)</h6><p>~<span class="score">25,000</span> บ./เทอม</p></div>
+                            </div>
+                            <div class="popular-majors-info">
+                                <div class="popular-majors-trigger">ข้อมูลสาขายอดฮิต
+                                    <div class="popular-majors-popup">
+                                        <h5>ตัวอย่างสาขายอดฮิตและเกณฑ์เบื้องต้น (รอบ Portfolio)</h5>
+                                        <ul><li><strong>วิศวกรรมคอมพิวเตอร์:</strong> GPAX ≥ 3.00, Portfolio</li></ul>
+                                        <div class="general-criteria-heading">เกณฑ์การยื่น (ภาพรวม)</div>
+                                        <ul><li>Portfolio, สัมภาษณ์, (อาจมีสอบเฉพาะทาง)</li></ul>
+                                        <div class="rounds-info-heading">จำนวนรับในแต่ละรอบ (โดยประมาณ)</div>
+                                        <ul class="rounds-info-list">
+                                            <li>รอบ 1 Portfolio: ~725 คน</li>
+                                            <li>รอบ 2 Quota: ~170 คน</li>
+                                            <li>รอบ 3 Admission: ~63 คน</li>
+                                            <li>รอบ 4 Direct Admission: ~10 คน</li>
+                                        </ul>
+                                        <p style="font-size:0.75em; opacity:0.8; margin-top:10px;"><em>*เป็นข้อมูลโดยประมาณ</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-footer">
+                           <a href="https://eng.kmutt.ac.th/" target="_blank" rel="noopener noreferrer" class="program-card-link">เว็บไซต์คณะวิศวกรรมศาสตร์ มจธ.</a>
+                        </div>
+                    </article>
+                    <article class="program-card-new">
+                        <div class="program-card-new-header">
+                             <img src="https://upload.wikimedia.org/wikipedia/th/thumb/e/e4/Seal_of_King_Mongkut%27s_Institute_of_Technology_Ladkrabang.svg/1200px-Seal_of_King_Mongkut%27s_Institute_of_Technology_Ladkrabang.svg.png" alt="สจล. Logo" class="program-card-logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/E36414/FFFFFF?text=KMITL&font=bold';">
+                            <div class="uni-program-name">
+                                <h5>สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</h5>
+                                <div class="program-card-subheader">คณะวิศวกรรมศาสตร์ (หลักสูตรไทย)</div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-body">
+                            <div class="requirements-grid">
+                                <div class="requirement-block"><h6>GPAX (ภาพรวม)</h6><p><span class="score">≥ 2.75</span></p></div>
+                                <div class="requirement-block"><h6>คะแนนสอบหลัก</h6><p>TPAT3, TGAT</p></div>
+                                <div class="requirement-block"><h6>จำนวนรับรวม (ทุกรอบ)</h6><p>~<span class="score">600+</span> คน</p></div>
+                                <div class="requirement-block"><h6>ค่าเทอม (โดยประมาณ)</h6><p>~<span class="score">20,000</span> บ./เทอม</p></div>
+                            </div>
+                            <div class="popular-majors-info">
+                                <div class="popular-majors-trigger">ข้อมูลสาขายอดฮิต
+                                    <div class="popular-majors-popup">
+                                        <h5>ตัวอย่างสาขายอดฮิตและเกณฑ์เบื้องต้น (รอบ Portfolio)</h5>
+                                        <ul><li><strong>วิศวกรรมคอมพิวเตอร์:</strong> GPAX ≥ 3.00, Portfolio</li></ul>
+                                        <div class="general-criteria-heading">เกณฑ์การยื่น (ภาพรวม)</div>
+                                        <ul><li>Portfolio, คะแนนสอบ, สัมภาษณ์</li></ul>
+                                        <div class="rounds-info-heading">จำนวนรับในแต่ละรอบ (โดยประมาณ)</div>
+                                        <ul class="rounds-info-list">
+                                            <li>รอบ 1 Portfolio: ~200 คน</li>
+                                            <li>รอบ 2 Quota: ~54 คน</li>
+                                            <li>รอบ 3 Admission: ~403 คน</li>
+                                            <li>รอบ 4 Direct Admission: ~18 คน</li>
+                                        </ul>
+                                        <p style="font-size:0.75em; opacity:0.8; margin-top:10px;"><em>*เป็นข้อมูลโดยประมาณ</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-footer">
+                           <a href="https://www.reg.kmitl.ac.th/index/faculty_engineer.php" target="_blank" rel="noopener noreferrer" class="program-card-link">เว็บไซต์คณะวิศวกรรมศาสตร์ สจล.</a>
+                        </div>
+                    </article>
+                     <article class="program-card-new">
+                        <div class="program-card-new-header">
+                            <img src="https://www.eng.kmutnb.ac.th/wp-content/uploads/2019/08/LOGO-KMUTNB--300x300.png" alt="มจพ. Logo" class="program-card-logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/C00000/FFFFFF?text=KMUTNB&font=bold';">
+                            <div class="uni-program-name">
+                                <h5>มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ</h5>
+                                <div class="program-card-subheader">คณะวิศวกรรมศาสตร์ (หลักสูตรไทย)</div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-body">
+                            <div class="requirements-grid">
+                                <div class="requirement-block"><h6>GPAX (ภาพรวม)</h6><p><span class="score">≥ 2.75</span></p></div>
+                                <div class="requirement-block"><h6>คะแนนสอบหลัก</h6><p>TGAT/TPAT (บางโครงการ)</p></div>
+                                <div class="requirement-block"><h6>จำนวนรับรวม (ทุกรอบ)</h6><p>~<span class="score">600+</span> คน</p></div>
+                                <div class="requirement-block"><h6>ค่าเทอม (โดยประมาณ)</h6><p>~<span class="score">18,000</span> บ./เทอม</p></div>
+                            </div>
+                            <div class="popular-majors-info">
+                                <div class="popular-majors-trigger">ข้อมูลสาขายอดฮิต
+                                    <div class="popular-majors-popup">
+                                        <h5>ตัวอย่างสาขายอดฮิตและเกณฑ์เบื้องต้น (รอบ Portfolio)</h5>
+                                        <ul><li><strong>วิศวกรรมการผลิต:</strong> GPAX ≥ 2.75, Portfolio</li></ul>
+                                        <div class="general-criteria-heading">เกณฑ์การยื่น (ภาพรวม)</div>
+                                        <ul><li>Portfolio, สัมภาษณ์</li></ul>
+                                        <div class="rounds-info-heading">จำนวนรับในแต่ละรอบ (โดยประมาณ)</div>
+                                        <ul class="rounds-info-list">
+                                            <li>รอบ 1 Portfolio: ~371 คน</li>
+                                            <li>รอบ 2 Quota: ~124 คน</li>
+                                            <li>รอบ 3 Admission: ~40 คน</li>
+                                            <li>รอบ 4 Direct Admission: ~154 คน</li>
+                                        </ul>
+                                        <p style="font-size:0.75em; opacity:0.8; margin-top:10px;"><em>*เป็นข้อมูลโดยประมาณ</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-footer">
+                           <a href="https://www.eng.kmutnb.ac.th/" target="_blank" rel="noopener noreferrer" class="program-card-link">เว็บไซต์คณะวิศวกรรมศาสตร์ มจพ.</a>
+                        </div>
+                    </article>
+                    <article class="program-card-new">
+                        <div class="program-card-new-header">
+                            <img src="https://upload.wikimedia.org/wikipedia/th/thumb/d/db/Chiang_Mai_University.svg/1200px-Chiang_Mai_University.svg.png" alt="มช. Logo" class="program-card-logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/7B1FA2/FFFFFF?text=CMU&font=bold';">
+                            <div class="uni-program-name">
+                                <h5>มหาวิทยาลัยเชียงใหม่</h5>
+                                <div class="program-card-subheader">คณะวิศวกรรมศาสตร์ (หลักสูตรไทย)</div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-body">
+                            <div class="requirements-grid">
+                                <div class="requirement-block"><h6>GPAX (ภาพรวม)</h6><p><span class="score">≥ 2.75-3.00</span></p></div>
+                                <div class="requirement-block"><h6>คะแนนสอบหลัก</h6><p>TGAT, TPAT3</p></div>
+                                <div class="requirement-block"><h6>จำนวนรับรวม (ทุกรอบ)</h6><p>~<span class="score">1100+</span> คน</p></div>
+                                <div class="requirement-block"><h6>ค่าเทอม (โดยประมาณ)</h6><p>~<span class="score">20,000</span> บ./เทอม</p></div>
+                            </div>
+                            <div class="popular-majors-info">
+                                <div class="popular-majors-trigger">ข้อมูลสาขายอดฮิต
+                                    <div class="popular-majors-popup">
+                                        <h5>ตัวอย่างสาขายอดฮิตและเกณฑ์เบื้องต้น (รอบ Portfolio)</h5>
+                                        <ul><li><strong>วิศวกรรมคอมพิวเตอร์:</strong> GPAX ≥ 3.00, Portfolio</li></ul>
+                                        <div class="general-criteria-heading">เกณฑ์การยื่น (ภาพรวม)</div>
+                                        <ul><li>Portfolio, คะแนนสอบ, สัมภาษณ์</li></ul>
+                                        <div class="rounds-info-heading">จำนวนรับในแต่ละรอบ (โดยประมาณ)</div>
+                                        <ul class="rounds-info-list">
+                                            <li>รอบ 1 Portfolio: ~352 คน</li>
+                                            <li>รอบ 2 Quota: ~225 คน</li>
+                                            <li>รอบ 3 Admission: ~350 คน</li>
+                                            <li>รอบ 4 Direct Admission: ~192 คน</li>
+                                        </ul>
+                                        <p style="font-size:0.75em; opacity:0.8; margin-top:10px;"><em>*เป็นข้อมูลโดยประมาณ</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-footer">
+                           <a href="https://www.eng.cmu.ac.th/" target="_blank" rel="noopener noreferrer" class="program-card-link">เว็บไซต์คณะวิศวกรรมศาสตร์ มช.</a>
+                        </div>
+                    </article>
+                     <article class="program-card-new">
+                        <div class="program-card-new-header">
+                             <img src="https://www.kku.ac.th/wp-content/uploads/2022/01/1.-official-logo-2022-26.png" alt="มข. Logo" class="program-card-logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/D32F2F/FFFFFF?text=KKU&font=bold';">
+                            <div class="uni-program-name">
+                                <h5>มหาวิทยาลัยขอนแก่น</h5>
+                                <div class="program-card-subheader">คณะวิศวกรรมศาสตร์ (หลักสูตรไทย)</div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-body">
+                            <div class="requirements-grid">
+                                <div class="requirement-block"><h6>GPAX (ภาพรวม)</h6><p><span class="score">≥ 2.75</span></p></div>
+                                <div class="requirement-block"><h6>คะแนนสอบหลัก</h6><p>TGAT/TPAT (บางโครงการ)</p></div>
+                                <div class="requirement-block"><h6>จำนวนรับรวม (ทุกรอบ)</h6><p>~<span class="score">600+</span> คน</p></div>
+                                <div class="requirement-block"><h6>ค่าเทอม (โดยประมาณ)</h6><p>~<span class="score">18,000</span> บ./เทอม</p></div>
+                            </div>
+                            <div class="popular-majors-info">
+                                <div class="popular-majors-trigger">ข้อมูลสาขายอดฮิต
+                                    <div class="popular-majors-popup">
+                                        <h5>ตัวอย่างสาขายอดฮิตและเกณฑ์เบื้องต้น (รอบ Portfolio)</h5>
+                                        <ul><li><strong>วิศวกรรมคอมพิวเตอร์:</strong> GPAX ≥ 3.00, Portfolio</li></ul>
+                                        <div class="general-criteria-heading">เกณฑ์การยื่น (ภาพรวม)</div>
+                                        <ul><li>Portfolio, สัมภาษณ์</li></ul>
+                                        <div class="rounds-info-heading">จำนวนรับในแต่ละรอบ (โดยประมาณ)</div>
+                                        <ul class="rounds-info-list">
+                                            <li>รอบ 1 Portfolio: ~326 คน</li>
+                                            <li>รอบ 2 Quota: ~152 คน</li>
+                                            <li>รอบ 3 Admission: ~118 คน</li>
+                                            <li>รอบ 4 Direct Admission: ~80 คน</li>
+                                        </ul>
+                                        <p style="font-size:0.75em; opacity:0.8; margin-top:10px;"><em>*เป็นข้อมูลโดยประมาณ</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-footer">
+                           <a href="https://eng.kku.ac.th/" target="_blank" rel="noopener noreferrer" class="program-card-link">เว็บไซต์คณะวิศวกรรมศาสตร์ มข.</a>
+                        </div>
+                    </article>
+                    <article class="program-card-new">
+                        <div class="program-card-new-header">
+                            <img src="https://huso.psu.ac.th/th/wp-content/uploads/2023/04/PSU_Logo_text_Eng_Color_2.png" alt="มอ. Logo" class="program-card-logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/0277BD/FFFFFF?text=PSU&font=bold';">
+                            <div class="uni-program-name">
+                                <h5>มหาวิทยาลัยสงขลานครินทร์</h5>
+                                <div class="program-card-subheader">คณะวิศวกรรมศาสตร์ (หลักสูตรไทย)</div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-body">
+                            <div class="requirements-grid">
+                                <div class="requirement-block"><h6>GPAX (ภาพรวม)</h6><p><span class="score">≥ 2.75</span></p></div>
+                                <div class="requirement-block"><h6>คะแนนสอบหลัก</h6><p>TGAT/TPAT (บางโครงการ)</p></div>
+                                <div class="requirement-block"><h6>จำนวนรับรวม (ทุกรอบ)</h6><p>~<span class="score">1000+</span> คน</p></div>
+                                <div class="requirement-block"><h6>ค่าเทอม (โดยประมาณ)</h6><p>~<span class="score">22,000</span> บ./เทอม</p></div>
+                            </div>
+                            <div class="popular-majors-info">
+                                <div class="popular-majors-trigger">ข้อมูลสาขายอดฮิต
+                                    <div class="popular-majors-popup">
+                                        <h5>ตัวอย่างสาขายอดฮิตและเกณฑ์เบื้องต้น (รอบ Portfolio)</h5>
+                                        <ul><li><strong>วิศวกรรมคอมพิวเตอร์:</strong> GPAX ≥ 3.00, Portfolio</li></ul>
+                                        <div class="general-criteria-heading">เกณฑ์การยื่น (ภาพรวม)</div>
+                                        <ul><li>Portfolio, สัมภาษณ์</li></ul>
+                                        <div class="rounds-info-heading">จำนวนรับในแต่ละรอบ (โดยประมาณ)</div>
+                                        <ul class="rounds-info-list">
+                                            <li>รอบ 1 Portfolio: ~594 คน</li>
+                                            <li>รอบ 2 Quota: ~210 คน</li>
+                                            <li>รอบ 3 Admission: ~100 คน</li>
+                                            <li>รอบ 4 Direct Admission: ~150 คน</li>
+                                        </ul>
+                                        <p style="font-size:0.75em; opacity:0.8; margin-top:10px;"><em>*เป็นข้อมูลโดยประมาณ</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-footer">
+                           <a href="https://www.eng.psu.ac.th/" target="_blank" rel="noopener noreferrer" class="program-card-link">เว็บไซต์คณะวิศวกรรมศาสตร์ มอ.</a>
+                        </div>
+                    </article>
+                </div> <h4 style="margin-top: 2rem; text-align:center; font-size:1.2rem; color: #004a7c;">ข้อกำหนดทั่วไปรอบ Portfolio (หลักสูตรไทย)</h4>
+                <p style="text-align:center; max-width: 700px; margin-left:auto; margin-right:auto; font-size:0.9rem;">GPAX, เกรดกลุ่มสาระ, Portfolio ผลงาน, TGAT, TPAT3, คะแนนภาษาอังกฤษ (อาจแตกต่างกันในแต่ละมหาวิทยาลัย)</p>
+            </div> <div class="faculty-category-block">
+                <div class="section-title-wrapper"><h2 class="section-title">คณะวิศวกรรมศาสตร์ (หลักสูตรนานาชาติ)</h2></div>
+                <p style="text-align:center; margin-top:-1.5rem; margin-bottom: 2rem;">ข้อมูลเบื้องต้นรอบ Portfolio (โปรดตรวจสอบประกาศล่าสุดจากมหาวิทยาลัย)</p>
+                <div class="program-list">
+                    <article class="program-card-new">
+                        <div class="program-card-new-header">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Logo_of_Chulalongkorn_University.svg/1200px-Logo_of_Chulalongkorn_University.svg.png" alt="จุฬาฯ Logo" class="program-card-logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/005A9C/FFFFFF?text=CU&font=bold';">
+                            <div class="uni-program-name">
+                                <h5>จุฬาลงกรณ์มหาวิทยาลัย</h5>
+                                <div class="program-card-subheader">ISE (International School of Engineering)</div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-body">
+                            <div class="requirements-grid">
+                                <div class="requirement-block"><h6>High School Equivalence</h6><p>GED: <span class="score">145+</span> (each subject)</p><p>IB/A-Level: ตามเกณฑ์</p></div>
+                                <div class="requirement-block"><h6>English Test</h6><p>IELTS: <span class="score">≥ 6.0</span></p><p>TOEFL iBT: <span class="score">≥ 80</span></p><p>CU-TEP: <span class="score">≥ 80</span></p></div>
+                                <div class="requirement-block"><h6>Math Test</h6><p>SAT Math: <span class="score">≥ 620</span></p><p>CU-AAT Math: <span class="score">≥ 480</span></p></div>
+                                <div class="requirement-block"><h6>Science Test</h6><p>SAT II (Phys & Chem): <span class="score">≥ 600</span> each</p><p>CU-ATS: <span class="score">≥ 800</span></p><p>ACT Sci: <span class="score">≥ 25</span></p></div>
+                                <div class="requirement-block"><h6>จำนวนรับ (รอบพอร์ต)</h6><p>~ <span class="score">180-200</span> คน (รวมทุกสาขา)</p></div>
+                                <div class="requirement-block"><h6>ค่าเทอม (โดยประมาณ)</h6><p>~ <span class="score">84,000</span> บาท/เทอม</p></div>
+                            </div>
+                            <div class="popular-majors-info">
+                                <div class="popular-majors-trigger">ข้อมูลสาขายอดฮิต
+                                    <div class="popular-majors-popup">
+                                        <h5>ตัวอย่างสาขายอดฮิตและเกณฑ์เบื้องต้น</h5>
+                                        <ul>
+                                            <li><strong>Aerospace Engineering:</strong> GPAX ≥ 3.5, Strong Math/Physics, IELTS ≥ 6.5, SAT Math ≥ 650</li>
+                                            <li><strong>Robotics and AI:</strong> GPAX ≥ 3.5, Strong Math/Programming, IELTS ≥ 6.5, SAT Math ≥ 650</li>
+                                        </ul>
+                                        <div class="general-criteria-heading">สิ่งที่ต้องเตรียม (ภาพรวม)</div>
+                                        <ul><li>Portfolio (ผลงาน, กิจกรรม), Statement of Purpose, Recommendation Letters, สัมภาษณ์ (ภาษาอังกฤษ)</li></ul>
+                                        <div class="rounds-info-heading">จำนวนรับในแต่ละรอบ (โดยประมาณ - ภาพรวม ISE)</div>
+                                        <ul class="rounds-info-list">
+                                            <li>รอบ 1 Portfolio: ส่วนใหญ่</li>
+                                            <li>รอบอื่นๆ: น้อยมาก หรือไม่มี (ตรวจสอบประกาศ)</li>
+                                        </ul>
+                                        <p style="font-size:0.75em; opacity:0.8; margin-top:10px;"><em>*เป็นข้อมูลโดยประมาณ ควรตรวจสอบประกาศทางการเสมอ</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-footer">
+                           <a href="https://www.ise.eng.chula.ac.th/admission" target="_blank" rel="noopener noreferrer" class="program-card-link">เว็บไซต์ ISE Chula</a>
+                        </div>
+                    </article>
+                    <article class="program-card-new">
+                        <div class="program-card-new-header">
+                             <img src="https://upload.wikimedia.org/wikipedia/th/thumb/5/51/Logo_ku_th.svg/1200px-Logo_ku_th.svg.png" alt="ม.เกษตรฯ Logo" class="program-card-logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/D4A017/FFFFFF?text=KU&font=bold';">
+                            <div class="uni-program-name">
+                                <h5>มหาวิทยาลัยเกษตรศาสตร์</h5>
+                                <div class="program-card-subheader">IUP (International Undergraduate Program)</div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-body">
+                            <div class="requirements-grid">
+                                <div class="requirement-block"><h6>High School Equivalence</h6><p>GPAX: <span class="score">≥ 2.75</span></p><p>หรือวุฒิเทียบเท่า</p></div>
+                                <div class="requirement-block"><h6>English Test</h6><p>IELTS: <span class="score">≥ 5.5</span></p><p>TOEFL iBT: <span class="score">≥ 61</span></p></div>
+                                <div class="requirement-block"><h6>Math/Science Test</h6><p>SAT Math: พิจารณา</p><p>AP Scores: พิจารณา</p></div>
+                                <div class="requirement-block"><h6>จำนวนรับ (รอบพอร์ต)</h6><p>~ <span class="score">100-150</span> คน (รวมทุกสาขา)</p></div>
+                                <div class="requirement-block"><h6>ค่าเทอม (โดยประมาณ)</h6><p>~ <span class="score">70,000</span> บาท/เทอม</p></div>
+                            </div>
+                            <div class="popular-majors-info">
+                                <div class="popular-majors-trigger">ข้อมูลสาขายอดฮิต
+                                    <div class="popular-majors-popup">
+                                        <h5>ตัวอย่างสาขายอดฮิตและเกณฑ์เบื้องต้น</h5>
+                                        <ul>
+                                            <li><strong>Software and Knowledge Engineering:</strong> GPAX ≥ 3.00, IELTS ≥ 5.5, Portfolio (เน้น Project ด้าน Software)</li>
+                                            <li><strong>Electrical Engineering:</strong> GPAX ≥ 2.75, IELTS ≥ 5.5, Portfolio (เน้นความสนใจด้านไฟฟ้า)</li>
+                                        </ul>
+                                        <div class="general-criteria-heading">สิ่งที่ต้องเตรียม (ภาพรวม)</div>
+                                        <ul><li>Portfolio ที่แสดงความสนใจและความสามารถทางวิศวกรรม, Recommendation Letters (ถ้ามี), สัมภาษณ์ (ภาษาอังกฤษ)</li></ul>
+                                        <div class="rounds-info-heading">จำนวนรับในแต่ละรอบ (โดยประมาณ - ภาพรวม IUP)</div>
+                                        <ul class="rounds-info-list">
+                                            <li>รอบ 1 Portfolio: ส่วนใหญ่</li>
+                                            <li>รอบอื่นๆ: ตรวจสอบประกาศ</li>
+                                        </ul>
+                                        <p style="font-size:0.75em; opacity:0.8; margin-top:10px;"><em>*เป็นข้อมูลโดยประมาณ ควรตรวจสอบประกาศทางการเสมอ</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-footer">
+                           <a href="https://iup.eng.ku.ac.th/admission/" target="_blank" rel="noopener noreferrer" class="program-card-link">เว็บไซต์ IUP Kasetsart</a>
+                        </div>
+                    </article>
+                    <article class="program-card-new">
+                        <div class="program-card-new-header">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/45/Mahidol_U.png" alt="มหิดล Logo" class="program-card-logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/1565C0/FFFFFF?text=MU&font=bold';">
+                            <div class="uni-program-name">
+                                <h5>มหาวิทยาลัยมหิดล</h5>
+                                <div class="program-card-subheader">Faculty of Engineering (International Programs)</div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-body">
+                            <div class="requirements-grid">
+                                <div class="requirement-block"><h6>High School Equivalence</h6><p>GPAX: <span class="score">≥ 3.00</span></p><p>หรือวุฒิเทียบเท่า</p></div>
+                                <div class="requirement-block"><h6>English Test</h6><p>IELTS: <span class="score">≥ 6.0</span></p><p>TOEFL iBT: <span class="score">≥ 64</span></p></div>
+                                <div class="requirement-block"><h6>Aptitude Test (Optional)</h6><p>SAT/ACT: พิจารณา</p></div>
+                                <div class="requirement-block"><h6>จำนวนรับ (รอบพอร์ต)</h6><p>~ <span class="score">80-120</span> คน (รวมทุกสาขา)</p></div>
+                                <div class="requirement-block"><h6>ค่าเทอม (โดยประมาณ)</h6><p>~ <span class="score">90,000</span> บาท/เทอม</p></div>
+                            </div>
+                            <div class="popular-majors-info">
+                                <div class="popular-majors-trigger">ข้อมูลสาขายอดฮิต
+                                    <div class="popular-majors-popup">
+                                        <h5>ตัวอย่างสาขายอดฮิตและเกณฑ์เบื้องต้น</h5>
+                                        <ul>
+                                            <li><strong>Biomedical Engineering:</strong> GPAX ≥ 3.25, IELTS ≥ 6.0, Portfolio (เน้นชีววิทยา, เคมี)</li>
+                                            <li><strong>Computer Engineering:</strong> GPAX ≥ 3.00, IELTS ≥ 6.0, Portfolio (เน้น Programming, Math)</li>
+                                        </ul>
+                                        <div class="general-criteria-heading">สิ่งที่ต้องเตรียม (ภาพรวม)</div>
+                                        <ul><li>Portfolio, Statement of Purpose, Recommendation Letters, สัมภาษณ์ (ภาษาอังกฤษ)</li></ul>
+                                        <div class="rounds-info-heading">จำนวนรับในแต่ละรอบ (โดยประมาณ - ภาพรวม EG MU Inter)</div>
+                                        <ul class="rounds-info-list">
+                                            <li>รอบ 1 Portfolio: ส่วนใหญ่</li>
+                                            <li>รอบอื่นๆ: ตรวจสอบประกาศ</li>
+                                        </ul>
+                                        <p style="font-size:0.75em; opacity:0.8; margin-top:10px;"><em>*เป็นข้อมูลโดยประมาณ ควรตรวจสอบประกาศทางการเสมอ</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-footer">
+                           <a href="https://www.eg.mahidol.ac.th/inter/" target="_blank" rel="noopener noreferrer" class="program-card-link">เว็บไซต์ EG Mahidol Inter</a>
+                        </div>
+                    </article>
+                    <article class="program-card-new">
+                        <div class="program-card-new-header">
+                            <img src="https://upload.wikimedia.org/wikipedia/th/thumb/7/76/Seal_of_King_Mongkut%27s_University_of_Technology_Thonburi.svg/1200px-Seal_of_King_Mongkut%27s_University_of_Technology_Thonburi.svg.png" alt="มจธ. Logo" class="program-card-logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/F28500/FFFFFF?text=KMUTT&font=bold';">
+                            <div class="uni-program-name">
+                                <h5>มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี</h5>
+                                <div class="program-card-subheader">SIIE (School of International and Interdisciplinary Engineering)</div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-body">
+                            <div class="requirements-grid">
+                                <div class="requirement-block"><h6>GPAX</h6><p><span class="score">≥ 3.00</span> (โดยประมาณ)</p></div>
+                                <div class="requirement-block"><h6>English Test</h6><p>IELTS <span class="score">≥ 5.5</span> / TOEFL</p></div>
+                                <div class="requirement-block"><h6>จำนวนรับ (รอบพอร์ต)</h6><p>~ <span class="score">150-200</span> คน</p></div>
+                                <div class="requirement-block"><h6>ค่าเทอม (โดยประมาณ)</h6><p>~ <span class="score">80,000</span> บ./เทอม</p></div>
+                            </div>
+                            <div class="popular-majors-info">
+                                <div class="popular-majors-trigger">ข้อมูลสาขายอดฮิต
+                                    <div class="popular-majors-popup">
+                                        <h5>ตัวอย่างสาขายอดฮิตและเกณฑ์เบื้องต้น</h5>
+                                        <ul><li><strong>Computer Engineering (Inter):</strong> GPAX ≥ 3.00, IELTS ≥ 5.5, Portfolio</li></ul>
+                                        <div class="general-criteria-heading">สิ่งที่ต้องเตรียม (ภาพรวม)</div>
+                                        <ul><li>Portfolio, สัมภาษณ์ (ภาษาอังกฤษ)</li></ul>
+                                        <div class="rounds-info-heading">จำนวนรับในแต่ละรอบ (โดยประมาณ - ภาพรวม SIIE)</div>
+                                        <ul class="rounds-info-list">
+                                            <li>รอบ 1 Portfolio: ส่วนใหญ่</li>
+                                            <li>รอบอื่นๆ: ตรวจสอบประกาศ</li>
+                                        </ul>
+                                        <p style="font-size:0.75em; opacity:0.8; margin-top:10px;"><em>*เป็นข้อมูลโดยประมาณ</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-footer">
+                           <a href="https://siie.kmutt.ac.th/" target="_blank" rel="noopener noreferrer" class="program-card-link">เว็บไซต์ SIIE KMUTT</a>
+                        </div>
+                    </article>
+                    <article class="program-card-new">
+                        <div class="program-card-new-header">
+                            <img src="https://upload.wikimedia.org/wikipedia/th/thumb/e/e4/Seal_of_King_Mongkut%27s_Institute_of_Technology_Ladkrabang.svg/1200px-Seal_of_King_Mongkut%27s_Institute_of_Technology_Ladkrabang.svg.png" alt="สจล. Logo" class="program-card-logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/E36414/FFFFFF?text=KMITL&font=bold';">
+                            <div class="uni-program-name">
+                                <h5>สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</h5>
+                                <div class="program-card-subheader">School of Engineering (International Programs)</div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-body">
+                            <div class="requirements-grid">
+                                <div class="requirement-block"><h6>GPAX</h6><p><span class="score">≥ 3.00</span> (โดยประมาณ)</p></div>
+                                <div class="requirement-block"><h6>English Test</h6><p>IELTS <span class="score">≥ 5.5</span> / TOEFL</p></div>
+                                <div class="requirement-block"><h6>จำนวนรับ (รอบพอร์ต)</h6><p>~ <span class="score">100-150</span> คน</p></div>
+                                <div class="requirement-block"><h6>ค่าเทอม (โดยประมาณ)</h6><p>~ <span class="score">75,000</span> บ./เทอม</p></div>
+                            </div>
+                            <div class="popular-majors-info">
+                                <div class="popular-majors-trigger">ข้อมูลสาขายอดฮิต
+                                    <div class="popular-majors-popup">
+                                        <h5>ตัวอย่างสาขายอดฮิตและเกณฑ์เบื้องต้น</h5>
+                                        <ul><li><strong>Robotics & AI Engineering (Inter):</strong> GPAX ≥ 3.00, IELTS ≥ 5.5, Portfolio</li></ul>
+                                        <div class="general-criteria-heading">สิ่งที่ต้องเตรียม (ภาพรวม)</div>
+                                        <ul><li>Portfolio, สัมภาษณ์ (ภาษาอังกฤษ)</li></ul>
+                                        <div class="rounds-info-heading">จำนวนรับในแต่ละรอบ (โดยประมาณ - ภาพรวม Inter KMITL)</div>
+                                        <ul class="rounds-info-list">
+                                            <li>รอบ 1 Portfolio: ส่วนใหญ่</li>
+                                            <li>รอบอื่นๆ: ตรวจสอบประกาศ</li>
+                                        </ul>
+                                        <p style="font-size:0.75em; opacity:0.8; margin-top:10px;"><em>*เป็นข้อมูลโดยประมาณ</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-footer">
+                           <a href="https://oia.kmitl.ac.th/oia/international-programs/" target="_blank" rel="noopener noreferrer" class="program-card-link">เว็บไซต์ Inter KMITL</a>
+                        </div>
+                    </article>
+                    <article class="program-card-new">
+                        <div class="program-card-new-header">
+                             <img src="https://www.eng.kmutnb.ac.th/wp-content/uploads/2019/08/LOGO-KMUTNB--300x300.png" alt="มจพ. Logo" class="program-card-logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/C00000/FFFFFF?text=KMUTNB&font=bold';">
+                            <div class="uni-program-name">
+                                <h5>มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ</h5>
+                                <div class="program-card-subheader">International College / TGGS</div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-body">
+                            <div class="requirements-grid">
+                                <div class="requirement-block"><h6>GPAX</h6><p>ตามกำหนด</p></div>
+                                <div class="requirement-block"><h6>English Test</h6><p>ตามเกณฑ์</p></div>
+                                <div class="requirement-block"><h6>จำนวนรับ (รอบพอร์ต)</h6><p>โปรดตรวจสอบ</p></div>
+                                <div class="requirement-block"><h6>ค่าเทอม (โดยประมาณ)</h6><p>โปรดตรวจสอบ</p></div>
+                            </div>
+                            <div class="popular-majors-info">
+                                <div class="popular-majors-trigger">ข้อมูลสาขายอดฮิต
+                                    <div class="popular-majors-popup">
+                                        <h5>ตัวอย่างสาขายอดฮิตและเกณฑ์เบื้องต้น</h5>
+                                        <ul><li><strong>Mechanical Engineering (TGGS):</strong> GPAX ≥ 3.00, English test, Portfolio</li></ul>
+                                        <div class="general-criteria-heading">สิ่งที่ต้องเตรียม (ภาพรวม)</div>
+                                        <ul><li>Portfolio, สัมภาษณ์</li></ul>
+                                        <div class="rounds-info-heading">จำนวนรับในแต่ละรอบ (โดยประมาณ)</div>
+                                        <ul class="rounds-info-list">
+                                            <li>รอบ 1 Portfolio: ส่วนใหญ่</li>
+                                            <li>รอบอื่นๆ: ตรวจสอบประกาศ</li>
+                                        </ul>
+                                        <p style="font-size:0.75em; opacity:0.8; margin-top:10px;"><em>*เป็นข้อมูลโดยประมาณ</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-footer">
+                           <a href="https://inter.kmutnb.ac.th/" target="_blank" rel="noopener noreferrer" class="program-card-link">เว็บไซต์ Inter KMUTNB</a>
+                        </div>
+                    </article>
+                    <article class="program-card-new">
+                        <div class="program-card-new-header">
+                             <img src="https://upload.wikimedia.org/wikipedia/th/thumb/d/db/Chiang_Mai_University.svg/1200px-Chiang_Mai_University.svg.png" alt="มช. Logo" class="program-card-logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/7B1FA2/FFFFFF?text=CMU&font=bold';">
+                            <div class="uni-program-name">
+                                <h5>มหาวิทยาลัยเชียงใหม่</h5>
+                                <div class="program-card-subheader">วิศวกรรมศาสตร์ (หลักสูตรนานาชาติ)</div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-body">
+                            <div class="requirements-grid">
+                                <div class="requirement-block"><h6>GPAX</h6><p><span class="score">≥ 3.00</span></p></div>
+                                <div class="requirement-block"><h6>English Test</h6><p>IELTS <span class="score">≥ 5.5-6.0</span></p></div>
+                                <div class="requirement-block"><h6>จำนวนรับ (รอบพอร์ต)</h6><p>~ <span class="score">20-30</span> คน/สาขา</p></div>
+                                <div class="requirement-block"><h6>ค่าเทอม (โดยประมาณ)</h6><p>~ <span class="score">55,000-70,000</span> บ./เทอม</p></div>
+                            </div>
+                            <div class="popular-majors-info">
+                                <div class="popular-majors-trigger">ข้อมูลสาขายอดฮิต
+                                    <div class="popular-majors-popup">
+                                        <h5>ตัวอย่างสาขาและเกณฑ์เบื้องต้น (รอบ Portfolio)</h5>
+                                        <ul>
+                                            <li><strong>Mechanical Engineering (Inter):</strong> GPAX ≥ 3.00, IELTS ≥ 5.5</li>
+                                            <li><strong>Integrated Engineering (Inter):</strong> GPAX ≥ 3.00, IELTS ≥ 6.0</li>
+                                        </ul>
+                                        <div class="general-criteria-heading">สิ่งที่ต้องเตรียม (ภาพรวม)</div>
+                                        <ul><li>Portfolio, สัมภาษณ์ (ภาษาอังกฤษ)</li></ul>
+                                         <div class="rounds-info-heading">จำนวนรับ (โดยประมาณ)</div>
+                                        <ul class="rounds-info-list">
+                                            <li>Mechanical (Inter): รอบ Portfolio 20 คน</li>
+                                            <li>Integrated (Inter): รอบ Portfolio 30 คน</li>
+                                        </ul>
+                                        <p style="font-size:0.75em; opacity:0.8; margin-top:10px;"><em>*เป็นข้อมูลโดยประมาณ ควรตรวจสอบประกาศทางการเสมอ</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-footer">
+                           <a href="https://www1.reg.cmu.ac.th/ugradapply/" target="_blank" rel="noopener noreferrer" class="program-card-link">เว็บไซต์รับเข้า มช.</a>
+                        </div>
+                    </article>
+                    <article class="program-card-new">
+                        <div class="program-card-new-header">
+                            <img src="https://www.kku.ac.th/wp-content/uploads/2022/01/1.-official-logo-2022-26.png" alt="มข. Logo" class="program-card-logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/D32F2F/FFFFFF?text=KKU&font=bold';">
+                            <div class="uni-program-name">
+                                <h5>มหาวิทยาลัยขอนแก่น</h5>
+                                <div class="program-card-subheader">วิศวกรรมศาสตร์ (หลักสูตรนานาชาติ)</div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-body">
+                            <div class="requirements-grid">
+                                <div class="requirement-block"><h6>GPAX</h6><p><span class="score">≥ 2.75-3.00</span></p></div>
+                                <div class="requirement-block"><h6>English Test</h6><p>IELTS <span class="score">≥ 5.0-5.5</span></p></div>
+                                <div class="requirement-block"><h6>จำนวนรับ (รอบพอร์ต)</h6><p>~ <span class="score">10-15</span> คน/สาขา</p></div>
+                                <div class="requirement-block"><h6>ค่าเทอม (โดยประมาณ)</h6><p>~ <span class="score">50,000</span> บ./เทอม</p></div>
+                            </div>
+                            <div class="popular-majors-info">
+                                <div class="popular-majors-trigger">ข้อมูลสาขายอดฮิต
+                                    <div class="popular-majors-popup">
+                                        <h5>ตัวอย่างสาขาและเกณฑ์เบื้องต้น (รอบ Portfolio)</h5>
+                                        <ul>
+                                            <li><strong>Chemical Engineering (Inter):</strong> GPAX ≥ 2.75, IELTS ≥ 5.0</li>
+                                            <li><strong>Digital Engineering (Inter):</strong> GPAX ≥ 3.00, IELTS ≥ 5.5</li>
+                                            <li><strong>Civil, Electrical, Industrial, Mechanical (Inter):</strong> GPAX ≥ 2.75, IELTS ≥ 5.0</li>
+                                        </ul>
+                                        <div class="general-criteria-heading">สิ่งที่ต้องเตรียม (ภาพรวม)</div>
+                                        <ul><li>Portfolio, สัมภาษณ์ (ภาษาอังกฤษ)</li></ul>
+                                        <p style="font-size:0.75em; opacity:0.8; margin-top:10px;"><em>*เป็นข้อมูลโดยประมาณ ควรตรวจสอบประกาศทางการเสมอ</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-footer">
+                           <a href="https://admissions.kku.ac.th/" target="_blank" rel="noopener noreferrer" class="program-card-link">เว็บไซต์รับเข้า มข.</a>
+                        </div>
+                    </article>
+                    <article class="program-card-new">
+                        <div class="program-card-new-header">
+                            <img src="https://huso.psu.ac.th/th/wp-content/uploads/2023/04/PSU_Logo_text_Eng_Color_2.png" alt="มอ. Logo" class="program-card-logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/0277BD/FFFFFF?text=PSU&font=bold';">
+                            <div class="uni-program-name">
+                                <h5>มหาวิทยาลัยสงขลานครินทร์</h5>
+                                <div class="program-card-subheader">วิศวกรรมศาสตร์ (หลักสูตรนานาชาติ)</div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-body">
+                            <div class="requirements-grid">
+                                <div class="requirement-block"><h6>GPAX</h6><p>ตามประกาศ</p></div>
+                                <div class="requirement-block"><h6>English Test</h6><p>ตามประกาศ</p></div>
+                                <div class="requirement-block"><h6>จำนวนรับ (รอบพอร์ต)</h6><p>โปรดตรวจสอบ</p></div>
+                                <div class="requirement-block"><h6>ค่าเทอม (โดยประมาณ)</h6><p>~ <span class="score">70,000</span> บ./เทอม</p></div>
+                            </div>
+                            <div class="popular-majors-info">
+                                <div class="popular-majors-trigger">ข้อมูลสาขายอดฮิต
+                                    <div class="popular-majors-popup">
+                                        <h5>สาขาวิชา (หลักสูตรนานาชาติ)</h5>
+                                        <ul>
+                                            <li><strong>Chemical Engineering (International Program)</strong></li>
+                                            <li><strong>Computer Engineering (International Program)</strong></li>
+                                        </ul>
+                                        <div class="general-criteria-heading">สิ่งที่ต้องเตรียม (ภาพรวม)</div>
+                                        <ul><li>Portfolio, ผลคะแนนภาษาอังกฤษ, สัมภาษณ์ (ภาษาอังกฤษ)</li></ul>
+                                        <p style="font-size:0.75em; opacity:0.8; margin-top:10px;"><em>*เป็นข้อมูลโดยประมาณ ควรตรวจสอบประกาศทางการจากเว็บไซต์คณะเสมอ</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-footer">
+                           <a href="https://www.eng.psu.ac.th/circumstance" target="_blank" rel="noopener noreferrer" class="program-card-link">เว็บไซต์ Eng PSU Inter</a>
+                        </div>
+                    </article>
+                </div> </div> <div class="faculty-category-block">
+                <div class="section-title-wrapper"><h2 class="section-title">คณะวิทยาศาสตร์ (สาขาคอมพิวเตอร์และที่เกี่ยวข้อง)</h2></div>
+                <p style="text-align:center; margin-top:-1.5rem; margin-bottom: 2rem;">ข้อมูลเบื้องต้นรอบ Portfolio (โปรดตรวจสอบประกาศล่าสุดจากมหาวิทยาลัย)</p>
+                <div class="program-list">
+                    <article class="program-card-new">
+                        <div class="program-card-new-header">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Logo_of_Chulalongkorn_University.svg/1200px-Logo_of_Chulalongkorn_University.svg.png" alt="จุฬาฯ Logo" class="program-card-logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/005A9C/FFFFFF?text=CU&font=bold';">
+                            <div class="uni-program-name">
+                                <h5>จุฬาลงกรณ์มหาวิทยาลัย</h5>
+                                <div class="program-card-subheader">คณะวิทยาศาสตร์ สาขาวิทยาการคอมพิวเตอร์</div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-body">
+                            <div class="requirements-grid">
+                                <div class="requirement-block"><h6>GPAX</h6><p><span class="score">≥ 3.25-3.5</span> (ตามโครงการ)</p></div>
+                                <div class="requirement-block"><h6>English Test</h6><p>พิจารณา (บางโครงการ)</p></div>
+                                <div class="requirement-block"><h6>จำนวนรับ (รอบพอร์ต)</h6><p>~ <span class="score">20-30</span> คน</p></div>
+                                <div class="requirement-block"><h6>ค่าเทอม (โดยประมาณ)</h6><p>~ <span class="score">21,000</span> บ./เทอม</p></div>
+                            </div>
+                            <div class="popular-majors-info">
+                                <div class="popular-majors-trigger">ข้อมูลสาขายอดฮิต
+                                    <div class="popular-majors-popup">
+                                        <h5>ตัวอย่างสาขา/แนวทางยอดฮิตและเกณฑ์เบื้องต้น</h5>
+                                        <ul>
+                                            <li><strong>AI & Machine Learning:</strong> GPAX ≥ 3.5, Portfolio (โครงงาน AI/ML), รางวัล สอวน. คอมฯ</li>
+                                            <li><strong>Software Development:</strong> GPAX ≥ 3.25, Portfolio (ผลงาน Application/Web)</li>
+                                        </ul>
+                                        <div class="general-criteria-heading">สิ่งที่ต้องเตรียม (ภาพรวม)</div>
+                                        <ul><li>Portfolio ผลงานเด่นด้านคอมพิวเตอร์, รางวัลการแข่งขัน, ผลคะแนนภาษาอังกฤษ (ถ้ามี), สอบสัมภาษณ์</li></ul>
+                                        <div class="rounds-info-heading">จำนวนรับในแต่ละรอบ (โดยประมาณ)</div>
+                                        <ul class="rounds-info-list">
+                                            <li>รอบ 1 Portfolio: ส่วนใหญ่</li>
+                                            <li>รอบอื่นๆ: ตรวจสอบประกาศ</li>
+                                        </ul>
+                                        <p style="font-size:0.75em; opacity:0.8; margin-top:10px;"><em>*เป็นข้อมูลโดยประมาณ</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-footer">
+                           <a href="https://www.science.chula.ac.th/academics/bachelor-programs/" target="_blank" rel="noopener noreferrer" class="program-card-link">เว็บไซต์คณะวิทยาศาสตร์ จุฬาฯ</a>
+                        </div>
+                    </article>
+                    <article class="program-card-new">
+                        <div class="program-card-new-header">
+                             <img src="https://upload.wikimedia.org/wikipedia/th/thumb/5/51/Logo_ku_th.svg/1200px-Logo_ku_th.svg.png" alt="ม.เกษตรฯ Logo" class="program-card-logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/D4A017/FFFFFF?text=KU&font=bold';">
+                            <div class="uni-program-name">
+                                <h5>มหาวิทยาลัยเกษตรศาสตร์</h5>
+                                <div class="program-card-subheader">คณะวิทยาศาสตร์ สาขาวิทยาการคอมพิวเตอร์</div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-body">
+                            <div class="requirements-grid">
+                                <div class="requirement-block"><h6>GPAX</h6><p><span class="score">≥ 3.00</span> (ตามโครงการ)</p></div>
+                                <div class="requirement-block"><h6>English Test</h6><p>พิจารณา (บางโครงการ)</p></div>
+                                <div class="requirement-block"><h6>จำนวนรับ (รอบพอร์ต)</h6><p>~ <span class="score">30-50</span> คน</p></div>
+                                <div class="requirement-block"><h6>ค่าเทอม (โดยประมาณ)</h6><p>~ <span class="score">17,000</span> บ./เทอม</p></div>
+                            </div>
+                            <div class="popular-majors-info">
+                                <div class="popular-majors-trigger">ข้อมูลสาขายอดฮิต
+                                    <div class="popular-majors-popup">
+                                        <h5>ตัวอย่างสาขา/แนวทางยอดฮิตและเกณฑ์เบื้องต้น</h5>
+                                        <ul>
+                                            <li><strong>Data Science:</strong> GPAX ≥ 3.00, Portfolio (โครงงานวิเคราะห์ข้อมูล), ความรู้สถิติ/โปรแกรมมิ่ง</li>
+                                            <li><strong>Game Development:</strong> GPAX ≥ 3.00, Portfolio (ผลงานเกม, Art, Story)</li>
+                                        </ul>
+                                        <div class="general-criteria-heading">สิ่งที่ต้องเตรียม (ภาพรวม)</div>
+                                        <ul><li>Portfolio ผลงาน, โครงการ, ความสามารถพิเศษ, คะแนนสอบมาตรฐาน (ถ้ามี), สัมภาษณ์</li></ul>
+                                        <div class="rounds-info-heading">จำนวนรับในแต่ละรอบ (โดยประมาณ)</div>
+                                        <ul class="rounds-info-list">
+                                            <li>รอบ 1 Portfolio: ส่วนใหญ่</li>
+                                            <li>รอบอื่นๆ: ตรวจสอบประกาศ</li>
+                                        </ul>
+                                        <p style="font-size:0.75em; opacity:0.8; margin-top:10px;"><em>*เป็นข้อมูลโดยประมาณ</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-footer">
+                           <a href="https://sci.ku.ac.th/th/undergrad/" target="_blank" rel="noopener noreferrer" class="program-card-link">เว็บไซต์คณะวิทยาศาสตร์ เกษตรฯ</a>
+                        </div>
+                    </article>
+                    <article class="program-card-new">
+                        <div class="program-card-new-header">
+                            <img src="https://upload.wikimedia.org/wikipedia/th/thumb/7/76/Seal_of_King_Mongkut%27s_University_of_Technology_Thonburi.svg/1200px-Seal_of_King_Mongkut%27s_University_of_Technology_Thonburi.svg.png" alt="มจธ. Logo" class="program-card-logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/F28500/FFFFFF?text=KMUTT&font=bold';">
+                            <div class="uni-program-name">
+                                <h5>มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี</h5>
+                                <div class="program-card-subheader">คณะวิทยาศาสตร์ สาขาวิทยาการคอมพิวเตอร์ (หลักสูตรภาษาอังกฤษ)</div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-body">
+                            <div class="requirements-grid">
+                                <div class="requirement-block"><h6>GPAX</h6><p><span class="score">≥ 3.00</span></p></div>
+                                <div class="requirement-block"><h6>English Test</h6><p>IELTS <span class="score">≥ 5.5</span> / TOEFL iBT <span class="score">≥ 61</span></p></div>
+                                <div class="requirement-block"><h6>จำนวนรับ (รอบพอร์ต)</h6><p>~ <span class="score">50</span> คน</p></div>
+                                <div class="requirement-block"><h6>ค่าเทอม (โดยประมาณ)</h6><p>~ <span class="score">40,000</span> บ./เทอม</p></div>
+                            </div>
+                            <div class="popular-majors-info">
+                                <div class="popular-majors-trigger">ข้อมูลเพิ่มเติม
+                                    <div class="popular-majors-popup">
+                                        <h5>เกณฑ์การพิจารณารอบ Portfolio</h5>
+                                        <ul>
+                                            <li>GPAX (6 เทอม) ≥ 3.00</li>
+                                            <li>GPA กลุ่มสาระคณิต, วิทย์, อังกฤษ ≥ 3.00</li>
+                                            <li>คะแนนสอบภาษาอังกฤษ (IELTS/TOEFL/KMUTT-TEP)</li>
+                                            <li>Portfolio และ สัมภาษณ์</li>
+                                        </ul>
+                                        <div class="general-criteria-heading">แนวทางการเรียน</div>
+                                        <ul>
+                                            <li>เน้นความรู้พื้นฐานและประยุกต์ด้านวิทยาการคอมพิวเตอร์</li>
+                                            <li>พัฒนาทักษะการเขียนโปรแกรม การวิเคราะห์ข้อมูล และ AI</li>
+                                        </ul>
+                                         <div class="rounds-info-heading">จำนวนรับในแต่ละรอบ (โดยประมาณ)</div>
+                                        <ul class="rounds-info-list">
+                                            <li>รอบ 1 Portfolio: 50 คน</li>
+                                            <li>รอบ 2 Quota: 10 คน</li>
+                                            <li>รอบ 3 Admission: 10 คน</li>
+                                        </ul>
+                                        <p style="font-size:0.75em; opacity:0.8; margin-top:10px;"><em>*เป็นข้อมูลโดยประมาณ ควรตรวจสอบประกาศทางการเสมอ</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-footer">
+                           <a href="https://science.kmutt.ac.th/" target="_blank" rel="noopener noreferrer" class="program-card-link">เว็บไซต์คณะวิทยาศาสตร์ มจธ.</a>
+                        </div>
+                    </article>
+                </div> </div> <div class="faculty-category-block">
+                <div class="section-title-wrapper"><h2 class="section-title">คณะเทคโนโลยีสารสนเทศและการสื่อสาร (ICT)</h2></div>
+                <p style="text-align:center; margin-top:-1.5rem; margin-bottom: 2rem;">ข้อมูลเบื้องต้นรอบ Portfolio (โปรดตรวจสอบประกาศล่าสุดจากมหาวิทยาลัย)</p>
+                <div class="program-list">
+                    <article class="program-card-new">
+                        <div class="program-card-new-header">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/45/Mahidol_U.png" alt="มหิดล Logo" class="program-card-logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/1565C0/FFFFFF?text=MU&font=bold';">
+                            <div class="uni-program-name">
+                                <h5>มหาวิทยาลัยมหิดล</h5>
+                                <div class="program-card-subheader">คณะ ICT (หลักสูตรนานาชาติ)</div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-body">
+                            <div class="requirements-grid">
+                                <div class="requirement-block"><h6>GPAX</h6><p><span class="score">≥ 3.00</span></p></div>
+                                <div class="requirement-block"><h6>English Test</h6><p>IELTS <span class="score">≥ 6.0</span> / TOEFL iBT <span class="score">≥ 64</span></p></div>
+                                <div class="requirement-block"><h6>จำนวนรับ (รอบพอร์ต)</h6><p>~ <span class="score">150-200</span> คน</p></div>
+                                <div class="requirement-block"><h6>ค่าเทอม (โดยประมาณ)</h6><p>~ <span class="score">60,000</span> บ./เทอม</p></div>
+                            </div>
+                            <div class="popular-majors-info">
+                                <div class="popular-majors-trigger">ข้อมูลสาขายอดฮิต
+                                    <div class="popular-majors-popup">
+                                        <h5>ตัวอย่างสาขา/แนวทางยอดฮิตและเกณฑ์เบื้องต้น</h5>
+                                        <ul>
+                                            <li><strong>Cybersecurity:</strong> GPAX ≥ 3.00, IELTS ≥ 6.0, Portfolio (ความสนใจด้านความปลอดภัย)</li>
+                                            <li><strong>Data Science (Track):</strong> GPAX ≥ 3.25, IELTS ≥ 6.0, Portfolio (โครงงาน Data)</li>
+                                        </ul>
+                                        <div class="general-criteria-heading">สิ่งที่ต้องเตรียม (ภาพรวม)</div>
+                                        <ul><li>Portfolio, Statement of Purpose, สัมภาษณ์ (ภาษาอังกฤษ), Aptitude Test (บางรอบ)</li></ul>
+                                        <div class="rounds-info-heading">จำนวนรับในแต่ละรอบ (โดยประมาณ - ภาพรวม ICT MU)</div>
+                                        <ul class="rounds-info-list">
+                                            <li>รอบ 1 Portfolio: ส่วนใหญ่ (มีหลายรอบย่อย)</li>
+                                            <li>รอบอื่นๆ: ตรวจสอบประกาศ</li>
+                                        </ul>
+                                        <p style="font-size:0.75em; opacity:0.8; margin-top:10px;"><em>*เป็นข้อมูลโดยประมาณ</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-footer">
+                           <a href="https://www.ict.mahidol.ac.th/th/admission-b-sc-program/" target="_blank" rel="noopener noreferrer" class="program-card-link">เว็บไซต์ ICT Mahidol</a>
+                        </div>
+                    </article>
+                    <article class="program-card-new">
+                        <div class="program-card-new-header">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Logo_of_Chulalongkorn_University.svg/1200px-Logo_of_Chulalongkorn_University.svg.png" alt="จุฬาฯ Logo" class="program-card-logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/005A9C/FFFFFF?text=CU&font=bold';">
+                            <div class="uni-program-name">
+                                <h5>จุฬาลงกรณ์มหาวิทยาลัย</h5>
+                                <div class="program-card-subheader">วิศวกรรมคอมพิวเตอร์และเทคโนโลยีดิจิทัล (CEDT - Inter)</div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-body">
+                            <div class="requirements-grid">
+                                <div class="requirement-block"><h6>GPAX</h6><p><span class="score">≥ 3.50</span></p></div>
+                                <div class="requirement-block"><h6>English Test</h6><p>IELTS <span class="score">≥ 6.5</span> / TOEFL iBT <span class="score">≥ 80</span></p></div>
+                                <div class="requirement-block"><h6>Math Test</h6><p>SAT Math <span class="score">≥ 700</span> / ACT Math <span class="score">≥ 29</span></p></div>
+                                <div class="requirement-block"><h6>จำนวนรับ (รอบพอร์ต)</h6><p>~ <span class="score">40-50</span> คน</p></div>
+                                <div class="requirement-block"><h6>ค่าเทอม (โดยประมาณ)</h6><p>~ <span class="score">110,000</span> บ./เทอม</p></div>
+                            </div>
+                            <div class="popular-majors-info">
+                                <div class="popular-majors-trigger">ข้อมูลสาขายอดฮิต
+                                    <div class="popular-majors-popup">
+                                        <h5>ตัวอย่างสาขา/แนวทางยอดฮิตและเกณฑ์เบื้องต้น</h5>
+                                        <ul><li><strong>Digital Technology & Innovation:</strong> GPAX ≥ 3.5, IELTS ≥ 6.5, SAT Math ≥ 700, Portfolio (เน้นนวัตกรรม)</li></ul>
+                                        <div class="general-criteria-heading">สิ่งที่ต้องเตรียม (ภาพรวม)</div>
+                                        <ul><li>Portfolio ผลงานด้านคอมพิวเตอร์และเทคโนโลยี, สัมภาษณ์ (ภาษาอังกฤษ)</li></ul>
+                                        <div class="rounds-info-heading">จำนวนรับในแต่ละรอบ (โดยประมาณ - ภาพรวม CEDT)</div>
+                                        <ul class="rounds-info-list">
+                                            <li>รอบ 1 Portfolio: ส่วนใหญ่</li>
+                                            <li>รอบอื่นๆ: ตรวจสอบประกาศ</li>
+                                        </ul>
+                                        <p style="font-size:0.75em; opacity:0.8; margin-top:10px;"><em>*เป็นข้อมูลโดยประมาณ</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-footer">
+                           <a href="https://cedt.eng.chula.ac.th/" target="_blank" rel="noopener noreferrer" class="program-card-link">เว็บไซต์ CEDT Chula</a>
+                        </div>
+                    </article>
+                    <article class="program-card-new">
+                        <div class="program-card-new-header">
+                            <img src="https://upload.wikimedia.org/wikipedia/th/thumb/e/e4/Seal_of_King_Mongkut%27s_Institute_of_Technology_Ladkrabang.svg/1200px-Seal_of_King_Mongkut%27s_Institute_of_Technology_Ladkrabang.svg.png" alt="สจล. Logo" class="program-card-logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/E36414/FFFFFF?text=KMITL&font=bold';">
+                            <div class="uni-program-name">
+                                <h5>สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</h5>
+                                <div class="program-card-subheader">คณะเทคโนโลยีสารสนเทศ (IT KMITL)</div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-body">
+                            <div class="requirements-grid">
+                                <div class="requirement-block"><h6>GPAX</h6><p><span class="score">≥ 2.75-3.00</span> (ตามสาขา)</p></div>
+                                <div class="requirement-block"><h6>English Test</h6><p>พิจารณา (บางโครงการ)</p></div>
+                                <div class="requirement-block"><h6>จำนวนรับ (รอบพอร์ต)</h6><p>~ <span class="score">100-200</span> คน</p></div>
+                                <div class="requirement-block"><h6>ค่าเทอม (โดยประมาณ)</h6><p>~ <span class="score">35,000</span> บ./เทอม</p></div>
+                            </div>
+                            <div class="popular-majors-info">
+                                <div class="popular-majors-trigger">ข้อมูลสาขายอดฮิต
+                                    <div class="popular-majors-popup">
+                                        <h5>ตัวอย่างสาขา/แนวทางยอดฮิตและเกณฑ์เบื้องต้น</h5>
+                                        <ul>
+                                            <li><strong>เทคโนโลยีสารสนเทศ (IT):</strong> GPAX ≥ 2.75, Portfolio</li>
+                                            <li><strong>วิทยาการข้อมูล (Data Science):</strong> GPAX ≥ 3.00, Portfolio</li>
+                                        </ul>
+                                        <div class="general-criteria-heading">สิ่งที่ต้องเตรียม (ภาพรวม)</div>
+                                        <ul><li>Portfolio ผลงาน, โครงการ, กิจกรรมที่เกี่ยวข้อง, สัมภาษณ์ (บางโครงการ)</li></ul>
+                                        <div class="rounds-info-heading">จำนวนรับในแต่ละรอบ (โดยประมาณ - ภาพรวม IT KMITL)</div>
+                                        <ul class="rounds-info-list">
+                                            <li>รอบ 1 Portfolio: ส่วนใหญ่</li>
+                                            <li>รอบอื่นๆ: ตรวจสอบประกาศ</li>
+                                        </ul>
+                                        <p style="font-size:0.75em; opacity:0.8; margin-top:10px;"><em>*เป็นข้อมูลโดยประมาณ</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-footer">
+                           <a href="https://it.kmitl.ac.th/th/undergrad-admission/" target="_blank" rel="noopener noreferrer" class="program-card-link">เว็บไซต์ IT KMITL</a>
+                        </div>
+                    </article>
+                    <article class="program-card-new">
+                        <div class="program-card-new-header">
+                            <img src="https://upload.wikimedia.org/wikipedia/th/thumb/7/76/Seal_of_King_Mongkut%27s_University_of_Technology_Thonburi.svg/1200px-Seal_of_King_Mongkut%27s_University_of_Technology_Thonburi.svg.png" alt="มจธ. Logo" class="program-card-logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/F28500/FFFFFF?text=KMUTT&font=bold';">
+                            <div class="uni-program-name">
+                                <h5>มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี</h5>
+                                <div class="program-card-subheader">คณะเทคโนโลยีสารสนเทศ (SIT) - หลักสูตรเทคโนโลยีสารสนเทศ</div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-body">
+                            <div class="requirements-grid">
+                                <div class="requirement-block"><h6>GPAX</h6><p><span class="score">≥ 3.00</span> (โดยประมาณ)</p></div>
+                                <div class="requirement-block"><h6>English Test</h6><p>พิจารณา</p></div>
+                                <div class="requirement-block"><h6>จำนวนรับ (รอบพอร์ต)</h6><p>โปรดตรวจสอบ</p></div>
+                                <div class="requirement-block"><h6>ค่าเทอม (โดยประมาณ)</h6><p>~ <span class="score">40,000</span> บ./เทอม</p></div>
+                            </div>
+                            <div class="popular-majors-info">
+                                <div class="popular-majors-trigger">ข้อมูลเพิ่มเติม
+                                    <div class="popular-majors-popup">
+                                        <h5>ตัวอย่างสาขา/แนวทางยอดฮิตและเกณฑ์เบื้องต้น</h5>
+                                        <ul>
+                                            <li><strong>เทคโนโลยีสารสนเทศ (IT):</strong> GPAX ≥ 3.00, Portfolio (โครงงาน, กิจกรรม IT)</li>
+                                        </ul>
+                                        <div class="general-criteria-heading">สิ่งที่ต้องเตรียม (ภาพรวม)</div>
+                                        <ul><li>Portfolio, สัมภาษณ์, อาจมีสอบข้อเขียน</li></ul>
+                                        <div class="rounds-info-heading">จำนวนรับในแต่ละรอบ (โดยประมาณ - ภาพรวม SIT IT)</div>
+                                        <ul class="rounds-info-list">
+                                            <li>รอบ 1 Portfolio: ส่วนใหญ่</li>
+                                            <li>รอบอื่นๆ: ตรวจสอบประกาศ</li>
+                                        </ul>
+                                        <p style="font-size:0.75em; opacity:0.8; margin-top:10px;"><em>*เป็นข้อมูลโดยประมาณ</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-footer">
+                           <a href="https://www.sit.kmutt.ac.th/th/undergraduate-program/" target="_blank" rel="noopener noreferrer" class="program-card-link">เว็บไซต์ SIT KMUTT</a>
+                        </div>
+                    </article>
+                    <article class="program-card-new">
+                        <div class="program-card-new-header">
+                            <img src="https://upload.wikimedia.org/wikipedia/th/thumb/7/76/Seal_of_King_Mongkut%27s_University_of_Technology_Thonburi.svg/1200px-Seal_of_King_Mongkut%27s_University_of_Technology_Thonburi.svg.png" alt="มจธ. Logo" class="program-card-logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/F28500/FFFFFF?text=KMUTT&font=bold';">
+                            <div class="uni-program-name">
+                                <h5>มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี</h5>
+                                <div class="program-card-subheader">คณะเทคโนโลยีสารสนเทศ (SIT) - นวัตกรรมบริการดิจิทัล (นานาชาติ)</div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-body">
+                            <div class="requirements-grid">
+                                <div class="requirement-block"><h6>GPAX</h6><p><span class="score">≥ 3.00</span></p></div>
+                                <div class="requirement-block"><h6>English Test</h6><p>IELTS <span class="score">≥ 5.5</span> / TOEFL iBT <span class="score">≥ 61</span></p></div>
+                                <div class="requirement-block"><h6>จำนวนรับ (รอบพอร์ต)</h6><p>~ <span class="score">40</span> คน</p></div>
+                                <div class="requirement-block"><h6>ค่าเทอม (โดยประมาณ)</h6><p>~ <span class="score">60,000</span> บ./เทอม</p></div>
+                            </div>
+                            <div class="popular-majors-info">
+                                <div class="popular-majors-trigger">ข้อมูลเพิ่มเติม
+                                    <div class="popular-majors-popup">
+                                        <h5>เกณฑ์การพิจารณารอบ Portfolio (DSI)</h5>
+                                        <ul>
+                                            <li>GPAX ไม่ต่ำกว่า 3.00</li>
+                                            <li>คะแนนภาษาอังกฤษตามเกณฑ์</li>
+                                            <li>Portfolio ที่แสดงศักยภาพด้านนวัตกรรมและเทคโนโลยีดิจิทัล</li>
+                                            <li>สอบสัมภาษณ์ (ภาษาอังกฤษ)</li>
+                                        </ul>
+                                        <div class="general-criteria-heading">แนวทางการเรียน</div>
+                                        <ul>
+                                            <li>เน้นการสร้างสรรค์นวัตกรรมบริการดิจิทัล</li>
+                                            <li>เรียนรู้การออกแบบ UX/UI, Business Model, Data Analytics</li>
+                                        </ul>
+                                         <div class="rounds-info-heading">จำนวนรับในแต่ละรอบ (โดยประมาณ - DSI)</div>
+                                        <ul class="rounds-info-list">
+                                            <li>รอบ 1 Portfolio: 40 คน</li>
+                                            <li>รอบ 3 Admission: 5 คน</li>
+                                        </ul>
+                                        <p style="font-size:0.75em; opacity:0.8; margin-top:10px;"><em>*เป็นข้อมูลโดยประมาณ ควรตรวจสอบประกาศทางการเสมอ</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-footer">
+                           <a href="https://www.sit.kmutt.ac.th/th/undergraduate-program/dsi-inter/" target="_blank" rel="noopener noreferrer" class="program-card-link">เว็บไซต์ DSI SIT KMUTT</a>
+                        </div>
+                    </article>
+                    <article class="program-card-new">
+                        <div class="program-card-new-header">
+                            <img src="https://www.eng.kmutnb.ac.th/wp-content/uploads/2019/08/LOGO-KMUTNB--300x300.png" alt="มจพ. Logo" class="program-card-logo" onerror="this.onerror=null; this.src='https://placehold.co/60x60/C00000/FFFFFF?text=KMUTNB&font=bold';">
+                            <div class="uni-program-name">
+                                <h5>มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ</h5>
+                                <div class="program-card-subheader">วิทยาลัยนานาชาติ - วิศวกรรมสารสนเทศและเครือข่าย (นานาชาติ)</div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-body">
+                            <div class="requirements-grid">
+                                <div class="requirement-block"><h6>GPAX (รอบ Portfolio)</h6><p><span class="score">≥ 2.50</span></p></div>
+                                <div class="requirement-block"><h6>English Test (รอบ Portfolio)</h6><p>IELTS <span class="score">≥ 5.0</span> / TOEFL iBT <span class="score">≥ 35</span> / KMUTNB-TEP <span class="score">≥ 50</span></p></div>
+                                <div class="requirement-block"><h6>จำนวนรับ (รอบ Portfolio)</h6><p>~ <span class="score">20</span> คน</p></div>
+                                <div class="requirement-block"><h6>ค่าเทอม (โดยประมาณ)</h6><p>~ <span class="score">75,000</span> บ./เทอม</p></div>
+                            </div>
+                            <div class="popular-majors-info">
+                                <div class="popular-majors-trigger">ข้อมูลเพิ่มเติม
+                                    <div class="popular-majors-popup">
+                                        <h5>เกณฑ์การพิจารณารอบ Portfolio</h5>
+                                        <ul>
+                                            <li>GPAX (4 หรือ 5 หรือ 6 เทอม) ไม่ต่ำกว่า 2.50</li>
+                                            <li>คะแนนภาษาอังกฤษตามเกณฑ์ (แต่ละทักษะ IELTS ≥ 4.5, TOEFL iBT Reading ≥ 7, Listening ≥ 7, Speaking ≥ 10, Writing ≥ 10)</li>
+                                            <li>Portfolio และ สัมภาษณ์ (ภาษาอังกฤษ)</li>
+                                        </ul>
+                                        <div class="general-criteria-heading">แนวทางการเรียน</div>
+                                        <ul>
+                                            <li>เน้นความรู้ด้านวิศวกรรมสารสนเทศและระบบเครือข่าย</li>
+                                            <li>Cybersecurity, Network Design, Cloud Computing</li>
+                                        </ul>
+                                         <div class="rounds-info-heading">จำนวนรับในแต่ละรอบ (โดยประมาณ)</div>
+                                        <ul class="rounds-info-list">
+                                            <li>รอบ 1 Portfolio: 20 คน</li>
+                                            <li>รอบ 2 Quota: 10 คน (GPAX ≥ 2.75)</li>
+                                            <li>รอบ 3 Admission: 10 คน (ใช้ A-Level คณิต1, ฟิสิกส์, อังกฤษ, TGAT)</li>
+                                        </ul>
+                                        <p style="font-size:0.75em; opacity:0.8; margin-top:10px;"><em>*เป็นข้อมูลโดยประมาณ ควรตรวจสอบประกาศทางการเสมอ</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="program-card-new-footer">
+                           <a href="https://ic.kmutnb.ac.th/academic-program/bachelor-degree/ine/" target="_blank" rel="noopener noreferrer" class="program-card-link">เว็บไซต์ INE KMUTNB IC</a>
+                        </div>
+                    </article>
+                </div> </div> <p style="text-align:center; margin-top:2.5rem; font-style:italic; font-size:0.9rem;"><strong>ข้อควรทราบ:</strong> ข้อมูลจำนวนรับและเกณฑ์การคัดเลือกอาจมีการเปลี่ยนแปลงในแต่ละปีการศึกษา ควรตรวจสอบข้อมูลล่าสุดจากประกาศอย่างเป็นทางการของ TCAS หรือมหาวิทยาลัยโดยตรงเสมอ</p>
+        </div> </main>
+
+    <section id="services" class="section" style="background-color: #e7f0ff;"> <div class="container">
+            <div class="section-title-wrapper"><h2 class="section-title">บริการและกิจกรรมของเรา</h2></div>
+            <div class="card-container">
+                <article class="card">
+                    <img src="https://scontent.fbkk28-1.fna.fbcdn.net/v/t39.30808-6/493846238_1264593312341491_8097470942346434960_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=111&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFOucZbzWOVI0JXmBQFcxJUPZgTgduY_2U9mBOB25j_ZbY5eNnN13Yf8bZP1Bs13iEIeSRRP3K3VRXTublqaFKh&_nc_ohc=nw4CKS4fWcAQ7kNvwGn1Xq-&_nc_oc=AdmUkgX9zxfSGid1PR6WRHI51CHKc3dhN99xP7sriatGNt2vOjUdOPLQWT6pqbKrUyw&_nc_zt=23&_nc_ht=scontent.fbkk28-1.fna&_nc_gid=3VyeTXakCLjgbc9RCdFoqA&oh=00_AfKJF0zWclh6Pnb3LK5esUMmOVW0fX0ephMC1fK9AsLlEA&oe=683BC0E3" alt="สอนทำโครงงานวิศวกรรม" class="card-image" onerror="this.onerror=null; this.src='https://placehold.co/400x200/CCCCCC/969696?text=Image+Not+Found&font=inter';">
+                    <div class="card-content">
+                        <h4>สอนทำโครงงานด้านวิศวกรรม</h4>
+                        <p>เสริมสร้างทักษะการทำโครงงานจริงสำหรับน้องๆ ที่สนใจด้านวิศวกรรม</p>
+                    </div>
+                </article>
+                <article class="card">
+                    <img src="https://scontent.fbkk28-1.fna.fbcdn.net/v/t39.30808-6/491026179_1250606877073468_8405001966845553438_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=100&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeEHhGaVZL2zNvZZxhTCWQKow5aM1k0Ds-7DlozWTQOz7v8G5ATSSUS5w3BUrMdA2923JJ7YkXGUDvNTnF3rBf6a&_nc_ohc=q7CUhOyct-kQ7kNvwF2LYit&_nc_oc=Adm1k4XPHtexN604imo3p7Jo3gFk6N6mQxUg-BOr558uR9V4cuXSn4nxVUUMl5DovZo&_nc_zt=23&_nc_ht=scontent.fbkk28-1.fna&_nc_gid=Jc0T9eT-wOrDysJL7S3aPw&oh=00_AfKpPbLRgyeTlzgHkb1KVJBBQYrm_vfoikHpotZ-10O1Ag&oe=683BBB0E" alt="สอนทฤษฎีและการแข่งขัน" class="card-image" onerror="this.onerror=null; this.src='https://placehold.co/400x200/CCCCCC/969696?text=Image+Not+Found&font=inter';">
+                    <div class="card-content">
+                        <h4>สอนทฤษฎี และการแข่งขัน ด้านวิศวกรรม</h4>
+                        <p>เตรียมความพร้อมทั้งภาคทฤษฎีและสนามแข่งขันจริง เช่น หุ่นยนต์เดินตามเส้น</p>
+                    </div>
+                </article>
+                <article class="card">
+                    <img src="https://scontent.fbkk28-1.fna.fbcdn.net/v/t39.30808-6/494067987_1263676779099811_3330330869446794975_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeED65dXNbkbuPo1vcSC2EyvJKq1EtCQVMckqrUS0JBUx92iU0atmYsDWLo0Xpw5_lJWrmBeEkeR4ZserYbmmuxh&_nc_ohc=2XnibfemMVUQ7kNvwELKqrd&_nc_oc=AdmE9iAZm_PauKarMwLxRgmDQt_jWnQCcTSQFzI06Muv5aftZ5S6Nt3KtIPbnFVNGGI&_nc_zt=23&_nc_ht=scontent.fbkk28-1.fna&_nc_gid=H7eNNL6yBVs4J4foWM8kOg&oh=00_AfKbzi25jFpaaLDqox7AQ8zElB12B9aoRojyTxipNSW4rw&oe=683BAF00" alt="อบรม Professional Skills" class="card-image" onerror="this.onerror=null; this.src='https://placehold.co/400x200/CCCCCC/969696?text=Image+Not+Found&font=inter';">
+                    <div class="card-content">
+                        <h4>จัดอบรม Professional Skills</h4>
+                        <p>พัฒนาทักษะที่จำเป็นสำหรับวิศวกรในอนาคต เช่น การโปรแกรม, Arduino, IoT, แขนกล DOBOT PLC</p>
+                    </div>
+                </article>
+                <article class="card">
+                    <img src="https://scontent.fbkk28-1.fna.fbcdn.net/v/t39.30808-6/495590431_1274438758023613_6699553575507860268_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=108&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeEeMnp8H6p0uBR5FDcZA6gVdgBKjdw7cDZ2AEqN3DtwNrj5Igbi8lWUBiaXLjwb9FaTJDtBVXm2XVmaGlZN1U6N&_nc_ohc=btTRywf7s8kQ7kNvwHHYpkB&_nc_oc=AdlgnfhDSsZEnnftsVmPslj3FltKb9w0z4ebqJWJSdaC-vJut3Pk_9hY0yJM3kuoa3g&_nc_zt=23&_nc_ht=scontent.fbkk28-1.fna&_nc_gid=d9vMUnVyqwRagg0B9bgBTw&oh=00_AfLbX7Py8B_OJecark0B78eiob-7_ECXqB_XBOcfF0MfIg&oe=683BE1BB" alt="Engineering Services" class="card-image" onerror="this.onerror=null; this.src='https://placehold.co/400x200/CCCCCC/969696?text=Image+Not+Found&font=inter';">
+                    <div class="card-content">
+                        <h4>Engineering Services</h4>
+                        <p>บริการด้านวิศวกรรม เช่น ชุดฝึกขนถ่ายโลหะ, เครื่องตรวจความสุกมะม่วง, เครื่องจำลองการชุบโลหะ</p>
+                    </div>
+                </article>
+                <article class="card">
+                    <img src="https://scontent.fbkk28-1.fna.fbcdn.net/v/t39.30808-6/494435058_1267088708758618_1774108509968498553_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=107&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeHVs2p-TP2apC44FFOB5cY6q_O9nK2bTgar872crZtOBrMBsKzKg2he8cpZLVKsJPIEhy9rOicqikVT83ZbwD8L&_nc_ohc=Vp8jWp_vJnIQ7kNvwG34ssm&_nc_oc=Adlw4Qv3PmH9X6iHq5uXi4uvnAzzFwj0Q3ULdXnPMcCznaseTet65bwIkhzNsLY37T0&_nc_zt=23&_nc_ht=scontent.fbkk28-1.fna&_nc_gid=kn_Gw3RH4rGHWO4K64zNWQ&oh=00_AfKEiOCYmyAZ1fE34BXlBLAjCw7MdjY_2d0hXmcLXahXfQ&oe=683BBF4D" alt="จัดค่ายนอกสถานที่" class="card-image" onerror="this.onerror=null; this.src='https://placehold.co/400x200/CCCCCC/969696?text=Image+Not+Found&font=inter';">
+                    <div class="card-content">
+                        <h4>จัดค่ายนอกสถานที่</h4>
+                        <p>เปิดประสบการณ์การเรียนรู้วิศวกรรมผ่านกิจกรรมค่ายนอกสถานที่ สร้างแรงบันดาลใจและทักษะ</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section">
+        <div class="container">
+            <div class="section-title-wrapper"><h2 class="section-title">ตัวอย่างโครงงานปี 2568</h2></div>
+            <div class="card-container">
+                <article class="card">
+                    <img src="https://scontent.fbkk28-1.fna.fbcdn.net/v/t39.30808-6/501391816_1290391766428312_6341762058165108301_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeGe7qMOHgs-aPc8go8O4h99bCJ-6Mrm06FsIn7oyubToWEbSnpfWOKpmrOgu2e6CfnLHusIfS67qvB6lJNvI1rm&_nc_ohc=WXJU1FePHKgQ7kNvwGhimVn&_nc_oc=AdkkAN9THXqOPCrtMcw5P5MWeqhWd5BvZLVZTdbtByFOivIwlDDElgxFi9EynU82i-Q&_nc_zt=23&_nc_ht=scontent.fbkk28-1.fna&_nc_gid=_YQ7FA8itqLYYU3za0XOcA&oh=00_AfLER97DeiRMCp068L49B_8grVqeiMIFdRNODuu5J6vXIQ&oe=683BAC82" alt="แบบจำลองการปลูกข้าวสมัยใหม่" class="card-image" onerror="this.onerror=null; this.src='https://placehold.co/400x200/CCCCCC/969696?text=Image+Not+Found&font=inter';">
+                    <div class="card-content">
+                        <h4>แบบจำลองการปลูกข้าวสมัยใหม่ด้วยระบบ IOT</h4>
+                        <p>ตรวจวัดคุณภาพน้ำและส่งข้อมูลบนจอแสดงผลแบบเรียลไทม์</p>
+                    </div>
+                </article>
+                <article class="card">
+                    <img src="https://scontent.fbkk28-1.fna.fbcdn.net/v/t39.30808-6/500707143_1290391753094980_2259802126241080656_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeGuTrT0KFTyUqdlyVvcDeJcW9LVXF8qXVlb0tVcXypdWZ7SY2bnFG8WWJiqYQ_60SfxwKC_EuRTsyr-YinQkPTD&_nc_ohc=UAVFtmbdOXsQ7kNvwEUNVnT&_nc_oc=Adk-sUIRaapaJzG94HzxzqmOOQw6f759zq-AOeMRxAqEKnOED8v5EeP-tbAJ2uWe8jY&_nc_zt=23&_nc_ht=scontent.fbkk28-1.fna&_nc_gid=imMMAbNRBMGyorKwQF5pNA&oh=00_AfKhqZglKICIVspVZEvVctyyeKCPqukGUSngvRGd2Jxjiw&oe=683BE043" alt="แบบจำลองการควบคุมคุณภาพน้ำ" class="card-image" onerror="this.onerror=null; this.src='https://placehold.co/400x200/CCCCCC/969696?text=Image+Not+Found&font=inter';">
+                    <div class="card-content">
+                        <h4>แบบจำลองการควบคุมและตรวจสอบคุณภาพน้ำด้วยระบบ IOT และ AI</h4>
+                        <p>ใช้ AI ในการวิเคราะห์ข้อมูลเสริมเพื่อการควบคุมคุณภาพน้ำ</p>
+                    </div>
+                </article>
+                <article class="card">
+                    <img src="https://scontent.fbkk28-1.fna.fbcdn.net/v/t39.30808-6/500975565_1290391833094972_293742014737656644_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=106&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFxLEotdMN4k1y1O4G-_DeTT0FaTJWIQkhPQVpMlYhCSDil_vwYHMYJlInaFthifgHy_MCnNY-cH1j968-A8tl7&_nc_ohc=-7HEn4b8KmkQ7kNvwGtdSly&_nc_oc=AdlOYUMrUq8t1xOR9J4HvSBoUz49q1BX8jfNmk99FEKeeqkzwVshz-QPDSPXiSucEyg&_nc_zt=23&_nc_ht=scontent.fbkk28-1.fna&_nc_gid=jG91mcP8C7-yi-lPRl1VNA&oh=00_AfJZ_sRdZCHvewH5tTDlcKQP6PCFE6OqbTqCOQ6lz0bssg&oe=683BD64E" alt="แบบจำลองเครื่องกวนสาร AI" class="card-image" onerror="this.onerror=null; this.src='https://placehold.co/400x200/CCCCCC/969696?text=Image+Not+Found&font=inter';">
+                    <div class="card-content">
+                        <h4>แบบจำลองเครื่องกวนสารโดยใช้ AI และ PID Control</h4>
+                        <p>AI วิเคราะห์ข้อมูลวัตถุดิบและระบบควบคุมมอเตอร์แบบ PID</p>
+                    </div>
+                </article>
+                <article class="card">
+                    <img src="https://scontent.fbkk28-1.fna.fbcdn.net/v/t39.30808-6/500707341_1290391783094977_3179447647000490767_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeE74rQ8IPgJ-JFCJQnFVuGTyGG27a8ToBHIYbbtrxOgEdo9vT5G966lCdTJqTk4N86460CDpkT7v_BvRJYS7fdC&_nc_ohc=q-YEyfotHIEQ7kNvwE15EhE&_nc_oc=AdnT172Ot_zryJErDuGV42WulFLp7hBUEv94ny_WL6jGoukoOcadCjLPYA048xJ5-Zg&_nc_zt=23&_nc_ht=scontent.fbkk28-1.fna&_nc_gid=hv1_rA24s8betJjW0wJBGA&oh=00_AfLKMUElpxXJHKePZc3Mmzf0aJNmQRo7pal0iZeUrfsuEA&oe=683BE13B" alt="เครื่องตรวจความสุกมะม่วง" class="card-image" onerror="this.onerror=null; this.src='https://placehold.co/400x200/CCCCCC/969696?text=Image+Not+Found&font=inter';">
+                    <div class="card-content">
+                        <h4>เครื่องตรวจความสุกมะม่วง</h4>
+                        <p>AI วิเคราะห์ข้อมูลสีผิวของมะม่วง เพื่อตรวจสอบคุณภาพและแสดงผลผ่านเครื่องพิมพ์</p>
+                    </div>
+                </article>
+                <article class="card">
+                    <img src="https://scontent.fbkk28-1.fna.fbcdn.net/v/t39.30808-6/500585759_1290428633091292_6536346707951281798_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=107&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeG7ZQbtFI_0KqNz_wRWi63ZnlIggqMw4j2eUiCCozDiPR_t-gylRMbKAWkF13mXa8w3xhf0q7fN9pVou-U2xAGl&_nc_ohc=vFutXbvWPhMQ7kNvwFBTlC9&_nc_oc=Adl8v9l9ZQizfQUo1nCZPdcNXvwyrciBJIsn9D6AS-kcK5zWX5kgUhPt7BEdR4GZFbc&_nc_zt=23&_nc_ht=scontent.fbkk28-1.fna&_nc_gid=yTZUFk5rG8c884Rz1a4zHw&oh=00_AfKFJHiefBzPA_SQkAoQNzNFakYqxPjNoGwAPEjPUMba8Q&oe=683BC384" alt="เครื่องช่วยกายภาพบำบัดแขน" class="card-image" onerror="this.onerror=null; this.src='https://placehold.co/400x200/CCCCCC/969696?text=Image+Not+Found&font=inter';">
+                    <div class="card-content">
+                        <h4>เครื่องช่วยกายภาพบำบัดแขน</h4>
+                        <p>ใช้กล้องเว็บแคมในการช่วยตรวจจับองศาและนับรอบการทำกายภาพ</p>
+                    </div>
+                </article>
+                <article class="card">
+                    <img src="https://scontent.fbkk28-1.fna.fbcdn.net/v/t39.30808-6/501448790_1290432366424252_4904884189356984021_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=103&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeGQoxn_0uj2L_7tPBrLYob_0okjU_t98crSiSNT-33xyo-c3aR4d1gkzCfpA3uCuR4tB4_LIvRY9S1M_MqgpArc&_nc_ohc=OgJx4rOGZtQQ7kNvwF7eQ0f&_nc_oc=AdmUk8o8sU15lfFrUf_kk8XNKspPjOrxQRdPk5za9ukUaZMzuK2fkCK3p2nQZIiEgyk&_nc_zt=23&_nc_ht=scontent.fbkk28-1.fna&_nc_gid=HkxcT5hM9Xs6Lh3cKu0MgQ&oh=00_AfIQ_zWR6dH0DhjgP405f-HPlrZG8b8-o61mlc08zvF5iA&oe=683BE680" alt="กระถางต้นไม้อัจฉริยะ" class="card-image" onerror="this.onerror=null; this.src='https://placehold.co/400x200/CCCCCC/969696?text=Image+Not+Found&font=inter';">
+                    <div class="card-content">
+                        <h4>กระถางต้นไม้อัจฉริยะ</h4>
+                        <p>ระบบดูแลต้นไม้อัตโนมัติ ควบคุมความชื้นและแสงสว่างผ่าน IoT</p>
+                    </div>
+                </article>
+                <article class="card">
+                    <img src="https://scontent.fbkk28-1.fna.fbcdn.net/v/t39.30808-6/501542888_1290428596424629_4790296145706001243_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeG3atlTVPUptY0ChrprRXMUxsrgXvKfjy3GyuBe8p-PLc1SO4Qh3bER9IoFLtkuhgqV8VoN4zuG1AmVRkkQpkLQ&_nc_ohc=Ayfl3wFOzCIQ7kNvwFwO4iE&_nc_oc=AdkuYTpQpOFKGMHdWmCrBMQMcj8IoCX3ktzPEDwCdsffCIwz_-T7IxrlItmVaqY6Acg&_nc_zt=23&_nc_ht=scontent.fbkk28-1.fna&_nc_gid=bR3fUplVZgBg_fNRkWAx9g&oh=00_AfJJ7g7wNA877nTLBUsD9Areouv0jmCdyYP_fF7z1IHnOg&oe=683BD02E" alt="เครื่องตรวจสอบคุณภาพน็อต" class="card-image" onerror="this.onerror=null; this.src='https://placehold.co/400x200/CCCCCC/969696?text=Image+Not+Found&font=inter';">
+                    <div class="card-content">
+                        <h4>เครื่องตรวจสอบคุณภาพน็อตและจำลองการชุบแข็ง</h4>
+                        <p>ระบบตรวจสอบคุณภาพน็อตบนสายพานแบบโมโนเรล พร้อมจำลองกระบวนการชุบแข็ง</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section id="locations" class="section" style="background-color: #e7f0ff;"> <div class="container">
+            <div class="section-title-wrapper"><h2 class="section-title">สถานที่อบรม LOGIN LEARNING Co.</h2></div>
+            <div class="locations-grid">
+                <div class="location-item">
+                    <h4>สาขาลาดกระบัง</h4>
+                    <p>ถนน ฉลองกรุง ลาดกระบัง, กรุงเทพมหานคร 10520</p>
+                </div>
+                <div class="location-item">
+                    <h4>สาขาบางพลัด</h4>
+                    <p>400 ซ.จรัญสนิทวงศ์ 75 แขวงบางพลัด, กรุงเทพมหานคร 10700</p>
+                </div>
+                <div class="location-item">
+                    <h4>สาขาศรีราชา</h4>
+                    <p>165/31 อำเภอศรีราชา ชลบุรี 20110</p>
+                </div>
+                <div class="location-item">
+                    <h4>สาขาระยอง</h4>
+                    <p>84/48 อำเภอเมืองระยอง ระยอง 21000</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer id="contact"> <div class="container">
+            <div class="footer-logos-container">
+                <div class="footer-logo">
+                    <img src="https://placehold.co/220x55/FFFFFF/002240?text=LOGIN+LEARNING&font=inter" alt="Login Learning Co. Logo" onerror="this.onerror=null; this.src='https://placehold.co/220x55/CCCCCC/969696?text=Logo';">
+                </div>
+                <div class="partner-logo">
+                    <img src="https://www.login-meta.co.th/wp-content/uploads/2023/02/cropped-LOGO4.png" alt="Login Meta Co. Logo" onerror="this.onerror=null; this.src='https://placehold.co/150x45/FFFFFF/002240?text=Partner+Logo';">
+                </div>
+            </div>
+            <p>ที่อยู่: 917 จรัญสนิทวงศ์ 75 บางพลัด บางพลัด</p>
+            <p>พี่ก้อง: <a href="tel:0909699578">090-969-9578</a> / พี่เก็ก: <a href="tel:0834360294">083-436-0294</a></p>
+            <p>© <span id="currentYear">2024</span> LOGIN LEARNING Co. All rights reserved.</p> </div>
+    </footer>
+
+    <div class="line-qr-code">
+        <a href="https://line.me/ti/g/TbTTLXEkRS" target="_blank" rel="noopener noreferrer">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://line.me/ti/g/TbTTLXEkRS" alt="Scan to join Line Group">
+            <p>เข้ากลุ่ม Line</p>
+        </a>
+    </div>
+
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    let headerOffset = document.querySelector('header').offsetHeight + 20; 
+                    // Use targetElement directly for position calculation
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth"
+                    });
+                }
+                document.querySelectorAll('nav a').forEach(navLink => navLink.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Set active main navigation link based on scroll position
+        const mainSections = document.querySelectorAll('section[id], main[id]'); // Include main tag with ID
+        const navLinks = document.querySelectorAll('nav a');
+        const headerHeight = document.querySelector('header').offsetHeight;
+
+        window.addEventListener('scroll', () => {
+            let currentMainSectionId = '';
+            mainSections.forEach(section => {
+                const sectionTop = section.offsetTop - headerHeight - 50; 
+                if (pageYOffset >= sectionTop) {
+                    // Ensure section is not the removed map section
+                    if (section.getAttribute('id') !== 'company-map') { // Check if section is not the removed map
+                         currentMainSectionId = section.getAttribute('id');
+                    }
+                }
+            });
+
+            navLinks.forEach(navLink => {
+                navLink.classList.remove('active');
+                if (navLink.getAttribute('href').substring(1) === currentMainSectionId) {
+                    navLink.classList.add('active');
+                }
+            });
+            // If no section is active (e.g., at the very top before the first section)
+            // and the first link is #home, make it active.
+            if (currentMainSectionId === '' && pageYOffset < (mainSections[0] ? mainSections[0].offsetTop : 0) ) {
+                const homeLink = document.querySelector('nav a[href="#home"]');
+                if(homeLink && !homeLink.classList.contains('active')) { // Check if not already active
+                     navLinks.forEach(link => link.classList.remove('active')); // Clear others
+                     homeLink.classList.add('active');
+                }
+            }
+        });
+        
+        // Set current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    </script>
+
+</body>
+</html>

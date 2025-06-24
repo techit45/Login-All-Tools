@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แบบฟอร์มเบิกจ่าย</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .form-container {
+            padding: 40px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .form-row.full {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 12px 16px;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fafbfc;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4facfe;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+        }
+
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-upload input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-upload-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            border: 2px dashed #4facfe;
+            border-radius: 10px;
+            background: #f8f9ff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 80px;
+        }
+
+        .file-upload-label:hover {
+            background: #e8f4fd;
+            border-color: #2196f3;
+        }
+
+        .file-upload-text {
+            text-align: center;
+            color: #4facfe;
+            font-weight: 500;
+        }
+
+        .file-preview {
+            margin-top: 10px;
+            padding: 10px;
+            background: #e8f5e8;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 2px solid #4facfe;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #4facfe;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        .processing-message {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .processing-info {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .drive-link {
+            display: inline-block;
+            background: #4285f4;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .drive-link:hover {
+            background: #3367d6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            display: none;
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid #f5c6cb;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                margin: 10px;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 แบบฟอร์มเบิกจ่าย</h1>
+            <p>กรุณากรอกข้อมูลให้ครบถ้วนสำหรับการเบิกจ่าย</p>
+        </div>
+
+        <div class="form-container">
+            <form id="expenseForm" enctype="multipart/form-data">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>หัวข้อ <span class="required">*</span></label>
+                        <select name="หัวข้อ" required>
+                            <option value="">เลือกหัวข้อ</option>
+                            <option value="เบิกทั่วไป">เบิกทั่วไป</option>
+                            <option value="ครุภัณฑ์">ครุภัณฑ์</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>บริษัท <span class="required">*</span></label>
+                        <select name="บริษัท" required>
+                            <option value="">เลือกบริษัท</option>
+                            <option value="LL">LL</option>
+                            <option value="W2D">W2D</option>
+                            <option value="META">META</option>
+                            <option value="MED">MED</option>
+                            <option value="EDTECH">EDTECH</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>รายละเอียด <span class="required">*</span></label>
+                        <textarea name="รายละเอียด" rows="3" placeholder="ระบุรายละเอียดการเบิกจ่าย..." required></textarea>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>จำนวน <span class="required">*</span></label>
+                        <input type="number" name="จำนวน" min="1" step="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>หน่วย <span class="required">*</span></label>
+                        <input type="text" name="หน่วย" placeholder="เช่น ชิ้น, กล่อง, แพ็ค" required>
+                    </div>
+                </div>
+
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>ราคารวม (บาท) <span class="required">*</span></label>
+                        <input type="number" name="ราคารวม" min="0" step="0.01" placeholder="0.00" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>ผู้ขอเบิก<span class="required">*</span></label>
+                        <input type="text" name="ผู้ขอเบิก" placeholder="ชื่อผู้ขอเบิก(ชื่อจริง)" required>
+                    </div>
+                    <div class="form-group">
+                        <label>ผู้แจ้งเบิก</label>
+                        <input type="text" name="ผู้แจ้งเบิก" placeholder="ชื่อผู้แจ้งเบิก(ชื่อจริง)">
+                    </div>
+                </div>
+
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>ตำแหน่ง</label>
+                        <select name="ตำแหน่ง">
+                            <option value="">เลือกตำแหน่ง</option>
+                            <option value="Full Time">Full Time</option>
+                            <option value="Part Time">Part Time</option>
+                            <option value="ฝึกงาน">ฝึกงาน</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label>อัพโหลดรูปภาพหลักฐาน <span class="required">*</span></label>
+                        <div class="file-upload">
+                            <input type="file" name="อัพโหลดรูปภาพ" accept="image/*" required id="imageFile">
+                            <div class="file-upload-label">
+                                <div class="file-upload-text">
+                                    📁 คลิกเพื่อเลือกไฟล์รูปภาพ<br>
+                                    <small>รองรับ: JPG, PNG, GIF</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="file-preview" id="filePreview"></div>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    ส่งข้อมูลเบิกจ่าย
+                </button>
+            </form>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <div class="processing-message">🔄 กำลังประมวลผลข้อมูลเบิกจ่าย</div>
+                <div class="processing-info">
+                    กรุณารอสักครู่ประมาณ <strong>1-2 นาที</strong><br>
+                    ระบบกำลังสร้างเอกสารและอัพโหลดไฟล์ลงใน Google Drive
+                </div>
+                <div style="margin-top: 20px;">
+                    <p style="margin-bottom: 10px; color: #333; font-weight: 500;">
+                        📁 ตรวจสอบไฟล์ที่สร้างได้ที่:
+                    </p>
+                    <a href="https://drive.google.com/drive/folders/1GzWpqOwjcBwX5SrloAkaMh1aFfFPGMd5" 
+                       target="_blank" 
+                       class="drive-link">
+                        🗂️ เปิดโฟลเดอร์ Google Drive
+                    </a>
+                </div>
+            </div>
+
+            <div class="success-message" id="successMessage">
+                <strong>✅ สำเร็จ!</strong> ข้อมูลเบิกจ่ายถูกส่งเรียบร้อยแล้ว
+            </div>
+
+            <div class="error-message" id="errorMessage">
+                <strong>❌ เกิดข้อผิดพลาด!</strong> <span id="errorText"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // *** ตั้งค่า Webhook URL ของ n8n ตรงนี้ ***
+        const WEBHOOK_URL = 'https://a395-2405-9800-b671-ef0-9467-53da-7d6b-2b81.ngrok-free.app/webhook/expense-form';
+        
+        // จัดการการแสดงตัวอย่างไฟล์
+        document.getElementById('imageFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const preview = document.getElementById('filePreview');
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <img src="${e.target.result}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                            <div>
+                                <div style="font-weight: 500; color: #2e7d32;">${file.name}</div>
+                                <div style="font-size: 0.9em; color: #666;">${(file.size / 1024 / 1024).toFixed(2)} MB</div>
+                            </div>
+                        </div>
+                    `;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.style.display = 'none';
+            }
+        });
+
+        // จัดการการส่งฟอร์ม
+        document.getElementById('expenseForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const formData = new FormData(form);
+            const submitBtn = form.querySelector('.submit-btn');
+            const loading = document.getElementById('loading');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // ซ่อนข้อความเก่า
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+            
+            // แสดง loading
+            submitBtn.style.display = 'none';
+            loading.style.display = 'block';
+            
+            try {
+                // ส่งข้อมูลไป n8n (แบบ fire-and-forget)
+                fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    body: formData
+                }).catch(error => {
+                    console.log('Background process started:', error);
+                });
+                
+                // แสดงข้อความสำเร็จทันที
+                setTimeout(() => {
+                    loading.style.display = 'none';
+                    successMessage.innerHTML = `
+                        <strong>✅ ส่งข้อมูลเรียบร้อยแล้ว!</strong><br>
+                        <div style="margin-top: 15px; color: #155724; line-height: 1.6;">
+                            📋 ข้อมูลเบิกจ่ายของคุณถูกส่งเข้าระบบแล้ว<br>
+                            ⏱️ ไฟล์ PDF จะพร้อมภายใน <strong>1-2 นาที</strong><br>
+                            📁 ตรวจสอบได้ที่: 
+                            <a href="https://drive.google.com/drive/folders/1GzWpqOwjcBwX5SrloAkaMh1aFfFPGMd5" 
+                               target="_blank" 
+                               style="color: #0066cc; text-decoration: none; font-weight: 600;">
+                               โฟลเดอร์ Google Drive 🔗
+                            </a>
+                        </div>
+                    `;
+                    successMessage.style.display = 'block';
+                    
+                    // รีเซ็ตฟอร์ม
+                    form.reset();
+                    document.getElementById('filePreview').style.display = 'none';
+                    
+                    // แสดงปุ่มกลับ
+                    submitBtn.style.display = 'block';
+                    
+                    // เลื่อนไปที่ข้อความสำเร็จ
+                    successMessage.scrollIntoView({ behavior: 'smooth' });
+                }, 2000); // แสดง loading 2 วินาที
+                
+            } catch (error) {
+                console.error('Error:', error);
+                
+                loading.style.display = 'none';
+                submitBtn.style.display = 'block';
+                
+                document.getElementById('errorText').textContent = 
+                    'เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง';
+                errorMessage.style.display = 'block';
+                errorMessage.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    </script>
+</body>
+</html>

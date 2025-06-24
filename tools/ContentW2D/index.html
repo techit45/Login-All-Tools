@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แบบฟอร์มส่งข้อมูลโครงงาน</title>
+    <style>
+        /* CSS Reset and Basic Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Sarabun', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Added Sarabun for Thai */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Main Container for the form */
+        .container {
+            max-width: 700px;
+            width: 100%;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        /* Header section with gradient background */
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        /* Form container with padding */
+        .form-container {
+            padding: 40px;
+        }
+
+        /* A single row in the form, can be full-width */
+        .form-row {
+            margin-bottom: 25px;
+        }
+
+        /* Grouping for label and input */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        /* Styling for input, select, and textarea fields */
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 12px 16px;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: 'Sarabun', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.3s ease;
+            background: #fafbfc;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4facfe;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.2);
+        }
+
+        textarea {
+            resize: vertical; /* Allow vertical resizing */
+        }
+        
+        /* Submit button styling */
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Loading Spinner and Message */
+        .status-box {
+            display: none; /* Hidden by default */
+            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            border: 2px solid;
+        }
+        
+        .loading {
+            border-color: #4facfe;
+            background: #f8f9fa;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4facfe;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        .status-message {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Success Message Styling */
+        .success-message {
+            border-color: #c3e6cb;
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        /* Error Message Styling */
+        .error-message {
+            border-color: #f5c6cb;
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Responsive design for smaller screens */
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+            .form-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Google Fonts for Thai language -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <div class="container">
+        <div class="header">
+            <h1>📝 แบบฟอร์มส่งข้อมูลโครงงาน</h1>
+            <p>กรุณากรอกรายละเอียดโครงงานและระดับชั้นให้ครบถ้วน</p>
+        </div>
+
+        <div class="form-container">
+            <form id="projectForm">
+                
+                <!-- Project Details Field -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="project_details">รายละเอียดโครงงาน <span class="required">*</span></label>
+                        <textarea id="project_details" name="project_details" rows="5" placeholder="อธิบายรายละเอียดเกี่ยวกับโครงงานของคุณที่นี่..." required></textarea>
+                    </div>
+                </div>
+
+                <!-- Grade Level Field -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="grade_level">ระดับชั้น <span class="required">*</span></label>
+                        <select id="grade_level" name="grade_level" required>
+                            <option value="" disabled selected>--- เลือกระดับชั้น ---</option>
+                            <option value="ประถมศึกษา">ประถมศึกษา</option>
+                            <option value="มัธยมศึกษาตอนต้น">มัธยมศึกษาตอนต้น</option>
+                            <option value="มัธยมศึกษาตอนปลาย">มัธยมศึกษาตอนปลาย</option>
+                            <option value="อาชีวศึกษา">อาชีวศึกษา</option>
+                            <option value="อุดมศึกษา">อุดมศึกษา</option>
+                            <option value="บุคคลทั่วไป">บุคคลทั่วไป</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    ส่งข้อมูลโครงงาน
+                </button>
+            </form>
+
+            <!-- Status boxes for loading, success, and error messages -->
+            <div id="loadingBox" class="status-box loading">
+                <div class="spinner"></div>
+                <div class="status-message">🔄 กำลังส่งข้อมูล...</div>
+            </div>
+            
+            <div id="successBox" class="status-box success-message">
+                <strong>✅ สำเร็จ!</strong> ข้อมูลของคุณถูกส่งเรียบร้อยแล้ว
+            </div>
+
+            <div id="errorBox" class="status-box error-message">
+                <strong>❌ เกิดข้อผิดพลาด!</strong> <span id="errorText"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- Configuration ---
+            // Set your n8n Webhook URL here.
+            // IMPORTANT: For local testing, 'http://localhost:5678' works if you run this HTML file on the same machine as n8n.
+            // If n8n is on a different machine or you use a service like ngrok, use the public URL.
+            const WEBHOOK_URL = 'https://a395-2405-9800-b671-ef0-9467-53da-7d6b-2b81.ngrok-free.app/webhook/ContentW2D';
+
+            // --- Get DOM Elements ---
+            const projectForm = document.getElementById('projectForm');
+            const submitBtn = projectForm.querySelector('.submit-btn');
+            const loadingBox = document.getElementById('loadingBox');
+            const successBox = document.getElementById('successBox');
+            const errorBox = document.getElementById('errorBox');
+            const errorText = document.getElementById('errorText');
+
+            // --- Form Submission Handler ---
+            projectForm.addEventListener('submit', async function(e) {
+                e.preventDefault(); // Prevent the default form submission
+
+                // Hide previous status messages
+                successBox.style.display = 'none';
+                errorBox.style.display = 'none';
+
+                // Show loading indicator and disable the button
+                submitBtn.style.display = 'none';
+                loadingBox.style.display = 'block';
+                submitBtn.disabled = true;
+
+                // Create a FormData object from the form
+                const formData = new FormData(projectForm);
+                
+                // Convert FormData to a simple JavaScript object for JSON submission
+                const data = {};
+                formData.forEach((value, key) => {
+                    data[key] = value;
+                });
+
+                try {
+                    // Send data to the n8n webhook as JSON
+                    const response = await fetch(WEBHOOK_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data)
+                    });
+
+                    // Check if the request was successful
+                    if (!response.ok) {
+                        // If the server returns an error, throw an exception
+                        throw new Error(`Server responded with status: ${response.status}`);
+                    }
+                    
+                    // --- Handle Success ---
+                    loadingBox.style.display = 'none';
+                    successBox.style.display = 'block';
+                    projectForm.reset(); // Clear the form fields
+
+                } catch (error) {
+                    // --- Handle Error ---
+                    console.error('Error sending data to webhook:', error);
+                    loadingBox.style.display = 'none';
+                    errorText.textContent = 'ไม่สามารถส่งข้อมูลได้ กรุณาตรวจสอบการเชื่อมต่อและลองใหม่อีกครั้ง';
+                    errorBox.style.display = 'block';
+                
+                } finally {
+                    // --- Final Steps ---
+                    // Re-enable the button and hide the loading box
+                    // This runs regardless of success or failure
+                    submitBtn.style.display = 'block';
+                    submitBtn.disabled = false;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

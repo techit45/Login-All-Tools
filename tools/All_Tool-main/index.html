@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Learning - ศูนย์รวมเครื่องมือ</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        /* Variables */
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1d4ed8;
+            --background-color: #f0f7ff;
+            --card-background: rgba(255, 255, 255, 0.95);
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --error-color: #ef4444;
+            --success-color: #22c55e;
+            --warning-color: #f59e0b;
+        }
+
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Sarabun', sans-serif;
+        }
+
+        body {
+            background: var(--background-color);
+            background-image: 
+                radial-gradient(at 80% 0%, rgb(37, 99, 235) 0, transparent 50%),
+                radial-gradient(at 0% 50%, rgb(29, 78, 216) 0, transparent 50%),
+                radial-gradient(at 80% 100%, rgb(37, 99, 235) 0, transparent 50%);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            background: var(--card-background);
+            padding: 30px;
+            text-align: center;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* User Info */
+        .user-info {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--card-background);
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .user-info i {
+            color: var(--primary-color);
+        }
+
+        /* Clock */
+        .clock {
+            font-size: 1.2em;
+            margin-top: 10px;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        /* Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            perspective: 1000px;
+        }
+
+        /* Tool Cards */
+        .tool-card {
+            background: var(--card-background);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transform-style: preserve-3d;
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.15);
+        }
+
+        .tool-card i {
+            font-size: 2.5em;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .tool-card:hover i {
+            transform: scale(1.2);
+        }
+
+        .tool-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .tool-card p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            min-height: 60px;
+            line-height: 1.6;
+        }
+
+        /* Tool Links */
+        .tool-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 25px;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            cursor: pointer;
+        }
+
+        .tool-link:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .tool-link.clicked {
+            transform: scale(0.95);
+            background: var(--secondary-color);
+        }
+
+        /* Error Message */
+        .error-message {
+            background: var(--error-color);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .error-message i {
+            font-size: 1.2em;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: var(--text-secondary);
+            background: var(--card-background);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shine {
+            to {
+                left: 200%;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            .user-info {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 20px;
+                justify-content: center;
+            }
+            .tool-card {
+                margin: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Transition Effect -->
+    <div class="page-transition"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- User Info -->
+        <div class="user-info">
+            <i class="fas fa-user-circle"></i>
+            <span id="username">Login Learning</span>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1>Login Learning - ศูนย์รวมเครื่องมือ</h1>
+            <p>ระบบรวมเครื่องมือสำหรับพนักงาน Login Learning</p>
+            <div class="clock" id="clock"></div>
+        </header>
+
+        <!-- Main Content - Tool Grid -->
+        <main class="tools-grid">
+            <!-- TestTeach Repository -->
+            <div class="tool-card" data-tool-id="testteach">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <h3>ประเมินผู้สอนกลุ่ม</h3>
+                <p>ระบบประเมินผู้สอนกลุ่ม สำหรับจัดการและประเมินการสอนของครูผู้สอนอย่างมีระบบ</p>
+                <a href="https://techit45.github.io/TestTeach/" class="tool-link" data-link="https://techit45.github.io/TestTeach/" target="_blank">
+                    <span class="link-text">
+                        <i class="fas fa-arrow-right"></i> เข้าใช้งาน
+                    </span>
+                </a>
+            </div>
+
+            <!-- Web_Bill Repository -->
+            <div class="tool-card" data-tool-id="webbill">
+                <i class="fas fa-file-invoice-dollar"></i>
+                <h3>ทำเรื่องเบิก</h3>
+                <p>ระบบทำเรื่องเบิก สำหรับจัดการใบเสร็จและการเงิน พร้อมระบบรายงานที่ครบครัน</p>
+                <a href="https://techit45.github.io/Web_Bill/" class="tool-link" data-link="https://techit45.github.io/Web_Bill/" target="_blank">
+                    <span class="link-text">
+                        <i class="fas fa-arrow-right"></i> เข้าใช้งาน
+                    </span>
+                </a>
+            </div>
+
+            <!-- ContentW2D Repository -->
+            <div class="tool-card" data-tool-id="contentw2d">
+                <i class="fas fa-lightbulb"></i>
+                <h3>คิดหัวข้อโครงงาน</h3>
+                <p>ระบบคิดหัวข้อโครงงาน 8 สัปดาห์ ช่วยในการวางแผนและจัดการโครงงานระยะยาว</p>
+                <a href="https://techit45.github.io/ContentW2D/" class="tool-link" data-link="https://techit45.github.io/ContentW2D/" target="_blank">
+                    <span class="link-text">
+                        <i class="fas fa-arrow-right"></i> เข้าใช้งาน
+                    </span>
+                </a>
+            </div>
+
+            <!-- WebMetaComp Repository -->
+            <div class="tool-card" data-tool-id="webmetacomp">
+                <i class="fas fa-network-wired"></i>
+                <h3>Meta Comp</h3>
+                <p>เว็บ Meta สำหรับจัดการข้อมูลและการทำงานร่วมกัน เพื่อการทำงานที่ราบรื่น</p>
+                <a href="https://techit45.github.io/WebMetaComp/" class="tool-link" data-link="https://techit45.github.io/WebMetaComp/" target="_blank">
+                    <span class="link-text">
+                        <i class="fas fa-arrow-right"></i> เข้าใช้งาน
+                    </span>
+                </a>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2025 Login Learning. สงวนลิขสิทธิ์</p>
+            <p>Last updated: <span id="lastUpdate">2025-06-12</span></p>
+        </footer>
+    </div>
+
+    <script>
+        // Error Handler Class
+        class ErrorHandler {
+            static showError(message) {
+                const existingError = document.querySelector('.error-message');
+                if (existingError) {
+                    existingError.remove();
+                }
+
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error-message';
+                errorDiv.innerHTML = `
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>${message}</span>
+                `;
+                document.body.appendChild(errorDiv);
+                
+                setTimeout(() => {
+                    errorDiv.style.display = 'block';
+                    errorDiv.style.opacity = '1';
+                }, 100);
+
+                setTimeout(() => {
+                    errorDiv.style.opacity = '0';
+                    setTimeout(() => {
+                        errorDiv.remove();
+                    }, 300);
+                }, 3000);
+            }
+        }
+
+        // Page Navigator Class
+        class PageNavigator {
+            static navigateToPage(url) {
+                try {
+                    if (!url) {
+                        throw new Error('ไม่พบ URL ที่ต้องการ');
+                    }
+                    window.open(url, '_blank');
+                } catch (error) {
+                    ErrorHandler.showError(`ไม่สามารถนำทางไปยังหน้าที่ต้องการได้: ${error.message}`);
+                }
+            }
+        }
+
+        // Clock Updater Class
+        class ClockUpdater {
+            static updateClock() {
+                const now = new Date();
+                const options = {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: false
+                };
+                const clockElement = document.getElementById('clock');
+                if (clockElement) {
+                    clockElement.textContent = now.toLocaleString('th-TH', options);
+                }
+            }
+
+            static startClock() {
+                this.updateClock();
+                setInterval(() => this.updateClock(), 1000);
+            }
+        }
+
+        // Card Effects Class
+        class CardEffects {
+            static initializeCards() {
+                document.querySelectorAll('.tool-card').forEach((card, index) => {
+                    this.add3DEffect(card);
+                    this.addLoadingAnimation(card, index);
+                });
+            }
+
+            static add3DEffect(card) {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = (y - centerY) / 20;
+                    const rotateY = (centerX - x) / 20;
+                    
+                    card.style.transform = `
+                        perspective(1000px)
+                        rotateX(${rotateX}deg)
+                        rotateY(${rotateY}deg)
+                        translateZ(10px)
+                    `;
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
+                });
+            }
+
+            static addLoadingAnimation(card, index) {
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                }, 100 * index);
+            }
+        }
+
+        // Link Handler Class
+        class LinkHandler {
+            static initializeLinks() {
+                document.querySelectorAll('.tool-link').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const targetUrl = link.getAttribute('data-link');
+                        
+                        link.classList.add('clicked');
+                        
+                        setTimeout(() => {
+                            PageNavigator.navigateToPage(targetUrl);
+                        }, 300);
+                    });
+                });
+            }
+        }
+
+        // Connection Handler Class
+        class ConnectionHandler {
+            static initialize() {
+                window.addEventListener('online', () => {
+                    document.querySelectorAll('.tool-link').forEach(link => {
+                        link.classList.remove('disabled');
+                    });
+                    ErrorHandler.showError('การเชื่อมต่อกลับมาแล้ว');
+                });
+
+                window.addEventListener('offline', () => {
+                    document.querySelectorAll('.tool-link').forEach(link => {
+                        link.classList.add('disabled');
+                    });
+                    ErrorHandler.showError('ไม่มีการเชื่อมต่ออินเทอร์เน็ต');
+                });
+            }
+        }
+
+        // Initialize Everything
+        document.addEventListener('DOMContentLoaded', () => {
+            ClockUpdater.startClock();
+            CardEffects.initializeCards();
+            LinkHandler.initializeLinks();
+            ConnectionHandler.initialize();
+            
+            // Update last updated date
+            const lastUpdateElement = document.getElementById('lastUpdate');
+            if (lastUpdateElement) {
+                lastUpdateElement.textContent = new Date().toISOString().split('T')[0];
+            }
+        });
+    </script>
+</body>
+</html>

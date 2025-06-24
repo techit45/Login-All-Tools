@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make.com E-Learning - เรียนรู้ระบบ Automation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        /* Company Theme Variables */
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #3b82f6;
+            --accent-color: #8b5cf6;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+            --background-color: #f8fafc;
+            --card-background: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --border-color: #e2e8f0;
+            --make-orange: #ff6900;
+            --make-purple: #6b46c1;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Sarabun', sans-serif;
+            background: var(--background-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: var(--card-background);
+            box-shadow: var(--shadow-md);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--make-orange);
+        }
+
+        .logo i {
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--make-orange), var(--make-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .progress-bar {
+            width: 300px;
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--make-orange), var(--make-purple));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .slide-counter {
+            font-weight: 600;
+            color: var(--text-secondary);
+            min-width: 80px;
+        }
+
+        /* Main Content */
+        .main-container {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 300px;
+            background: var(--card-background);
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            overflow-y: auto;
+            height: calc(100vh - 80px);
+        }
+
+        .sidebar h3 {
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .chapter-list {
+            list-style: none;
+        }
+
+        .chapter-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .chapter-link {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .chapter-link:hover {
+            background: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .chapter-link.active {
+            background: linear-gradient(135deg, var(--make-orange), var(--make-purple));
+            color: white;
+            font-weight: 600;
+        }
+
+        .chapter-link.completed {
+            background: var(--success-color);
+            color: white;
+        }
+
+        /* Slide Container */
+        .slide-container {
+            flex: 1;
+            padding: 3rem;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-background);
+            border-radius: 16px;
+            box-shadow: var(--shadow-xl);
+            padding: 3rem;
+            min-height: 600px;
+            animation: slideIn 0.5s ease;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide h1 {
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--make-orange), var(--make-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .slide h2 {
+            color: var(--text-primary);
+            margin: 2rem 0 1rem 0;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .slide h3 {
+            color: var(--text-primary);
+            margin: 1.5rem 0 1rem 0;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .slide p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .slide ul, .slide ol {
+            margin: 1rem 0 1.5rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .slide li {
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        /* Feature Cards */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: var(--card-background);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--make-orange);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .feature-card i {
+            font-size: 2.5rem;
+            color: var(--make-orange);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h4 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* Quiz Styles */
+        .quiz-container {
+            background: linear-gradient(135deg, var(--make-orange), var(--make-purple));
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: white;
+        }
+
+        .quiz-question {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .quiz-option.selected {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: white;
+        }
+
+        .quiz-option.correct {
+            background: var(--success-color);
+            border-color: var(--success-color);
+        }
+
+        .quiz-option.incorrect {
+            background: var(--error-color);
+            border-color: var(--error-color);
+        }
+
+        .quiz-result {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            display: none;
+        }
+
+        /* Navigation Buttons */
+        .slide-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .nav-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .prev-btn {
+            background: var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        .prev-btn:hover:not(:disabled) {
+            background: var(--text-secondary);
+            color: white;
+        }
+
+        .next-btn {
+            background: linear-gradient(135deg, var(--make-orange), var(--make-purple));
+            color: white;
+        }
+
+        .next-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Image Styles */
+        .slide-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(255, 105, 0, 0.1), rgba(107, 70, 193, 0.1));
+            border-left: 4px solid var(--make-orange);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .highlight-box h4 {
+            color: var(--make-orange);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Quiz Styles */
+        .quiz-container {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-md);
+        }
+
+        .quiz-question {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-option {
+            padding: 1rem 1.5rem;
+            background: var(--background-color);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--make-orange);
+            background: rgba(255, 105, 0, 0.05);
+        }
+
+        .quiz-option.selected {
+            border-color: var(--make-orange);
+            background: rgba(255, 105, 0, 0.1);
+        }
+
+        .quiz-option.correct {
+            border-color: var(--success-color);
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+        }
+
+        .quiz-option.incorrect {
+            border-color: var(--error-color);
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error-color);
+        }
+
+        .quiz-result {
+            display: none;
+            padding: 1rem;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success-color);
+            border-radius: 8px;
+            color: var(--success-color);
+            font-weight: 500;
+        }
+
+        /* Code Block Styles */
+        .code-block {
+            background: #1a1a1a;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin: 1rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        /* Highlight Box Styles */
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(255, 105, 0, 0.1), rgba(107, 70, 193, 0.1));
+            border-left: 4px solid var(--make-orange);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-box h4 {
+            color: var(--make-orange);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        /* Feature Grid Styles */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--make-orange);
+        }
+
+        .feature-card i {
+            font-size: 2.5rem;
+            color: var(--make-orange);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .feature-card h4 {
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .progress-bar {
+                width: 200px;
+            }
+
+            .main-container {
+                flex-direction: column;
+                margin-top: 120px;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                order: 2;
+            }
+
+            .slide-container {
+                padding: 1.5rem;
+                order: 1;
+            }
+
+            .slide {
+                padding: 2rem;
+            }
+
+            .slide h1 {
+                font-size: 2rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-cogs"></i>
+            <span>Make.com E-Learning</span>
+        </div>
+        <div class="nav-controls">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="slide-counter" id="slideCounter">1 / 20</div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h3>หลักสูตร Make.com</h3>
+            <ul class="chapter-list" id="chapterList">
+                <li class="chapter-item">
+                    <a href="#" class="chapter-link active" data-slide="0">1. รู้จัก Make.com</a>
+                </li>
+                <li class="chapter-item">
+                    <a href="#" class="chapter-link" data-slide="1">2. การสมัครและเริ่มต้น</a>
+                </li>
+                <li class="chapter-item">
+                    <a href="#" class="chapter-link" data-slide="2">3. ส่วนประกอบของ Make</a>
+                </li>
+                <li class="chapter-item">
+                    <a href="#" class="chapter-link" data-slide="3">4. การสร้าง Scenario แรก</a>
+                </li>
+                <li class="chapter-item">
+                    <a href="#" class="chapter-link" data-slide="4">5. Modules และ Apps</a>
+                </li>
+                <li class="chapter-item">
+                    <a href="#" class="chapter-link" data-slide="5">6. การเชื่อมต่อ Services</a>
+                </li>
+                <li class="chapter-item">
+                    <a href="#" class="chapter-link" data-slide="6">7. Data Mapping</a>
+                </li>
+                <li class="chapter-item">
+                    <a href="#" class="chapter-link" data-slide="7">8. Filters และ Routers</a>
+                </li>
+                <li class="chapter-item">
+                    <a href="#" class="chapter-link" data-slide="8">9. Error Handling</a>
+                </li>
+                <li class="chapter-item">
+                    <a href="#" class="chapter-link" data-slide="9">10. การทดสอบ Scenario</a>
+                </li>
+                <li class="chapter-item">
+                    <a href="#" class="chapter-link" data-slide="10">11. Scheduling</a>
+                </li>
+                <li class="chapter-item">
+                    <a href="#" class="chapter-link" data-slide="11">12. Webhooks</a>
+                </li>
+                <li class="chapter-item">
+                    <a href="#" class="chapter-link" data-slide="12">13. Advanced Features</a>
+                </li>
+                <li class="chapter-item">
+                    <a href="#" class="chapter-link" data-slide="13">14. Best Practices</a>
+                </li>
+                <li class="chapter-item">
+                    <a href="#" class="chapter-link" data-slide="14">15. ตัวอย่างการใช้งานจริง</a>
+                </li>
+                <li class="chapter-item">
+                    <a href="#" class="chapter-link" data-slide="15">16. Troubleshooting</a>
+                </li>
+                <li class="chapter-item">
+                    <a href="#" class="chapter-link" data-slide="16">17. Security & Privacy</a>
+                </li>
+                <li class="chapter-item">
+                    <a href="#" class="chapter-link" data-slide="17">18. ราคาและแพ็คเกจ</a>
+                </li>
+                <li class="chapter-item">
+                    <a href="#" class="chapter-link" data-slide="18">19. Quiz ท้ายบทเรียน</a>
+                </li>
+                <li class="chapter-item">
+                    <a href="#" class="chapter-link" data-slide="19">20. สรุปและขั้นตอนถัดไป</a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Slide Container -->
+        <main class="slide-container">
+            <!-- Slide 1: รู้จัก Make.com -->
+            <div class="slide active" id="slide-0">
+                <h1>🚀 รู้จัก Make.com</h1>
+                <p>Make.com (เดิมชื่อ Integromat) คือแพลตฟอร์มอัตโนมัติที่ช่วยให้คุณเชื่อมต่อแอปพลิเคชันและบริการต่างๆ เข้าด้วยกันโดยไม่ต้องเขียนโค้ด</p>
+                
+                <h2>🎯 Make.com คืออะไร?</h2>
+                <p>Make.com เป็นเครื่องมือ No-Code Automation ที่ช่วยให้ธุรกิจสามารถสร้างระบบอัตโนมัติที่ซับซ้อนได้อย่างง่ายดาย ด้วยการลากและวางในรูปแบบกราฟิก</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-link"></i>
+                        <h4>เชื่อมต่อทุกอย่าง</h4>
+                        <p>เชื่อมต่อแอปพลิเคชันมากกว่า 1,000+ แอป รวมถึง Google, Facebook, Slack, และอื่นๆ อีกมากมาย</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-code"></i>
+                        <h4>ไม่ต้องเขียนโค้ด</h4>
+                        <p>สร้างระบบอัตโนมัติที่ซับซ้อนด้วยการลากและวาง ไม่จำเป็นต้องมีความรู้ด้านการเขียนโปรแกรม</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>เพิ่มประสิทธิภาพ</h4>
+                        <p>ลดเวลาการทำงานด้วยมือ เพิ่มความแม่นยำ และลดข้อผิดพลาดจากการทำงานซ้ำๆ</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-clock"></i>
+                        <h4>ทำงาน 24/7</h4>
+                        <p>ระบบอัตโนมัติทำงานต่อเนื่อง ไม่จำเป็นต้องคอยควบคุม ทำงานได้แม้ในเวลาที่คุณไม่อยู่</p>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>💡 จุดเด่นของ Make.com</h4>
+                    <ul>
+                        <li>Interface ที่ใช้งานง่าย แบบ Visual</li>
+                        <li>รองรับการทำงานแบบ Multi-step ที่ซับซ้อน</li>
+                        <li>มี Error Handling ที่แข็งแกร่ง</li>
+                        <li>ราคาที่คุ้มค่า เมื่อเทียบกับคู่แข่ง</li>
+                        <li>Community และ Documentation ที่ครบครัน</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 2: การสมัครและเริ่มต้น -->
+            <div class="slide" id="slide-1">
+                <h1>📝 การสมัครและเริ่มต้นใช้งาน</h1>
+                
+                <h2>🔑 การสร้างบัญชี</h2>
+                <ol>
+                    <li><strong>เข้าไปที่เว็บไซต์:</strong> www.make.com</li>
+                    <li><strong>คลิก "Sign up for free"</strong></li>
+                    <li><strong>กรอกข้อมูล:</strong>
+                        <ul>
+                            <li>อีเมล</li>
+                            <li>รหัสผ่าน</li>
+                            <li>ชื่อองค์กร (ถ้ามี)</li>
+                        </ul>
+                    </li>
+                    <li><strong>ยืนยันอีเมล</strong> จากข้อความที่ส่งไปให้</li>
+                    <li><strong>เข้าสู่ระบบ</strong> และเริ่มใช้งาน</li>
+                </ol>
+
+                <h2>🎨 ทำความเข้าใจ Dashboard</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <h4>Dashboard หลัก</h4>
+                        <p>แสดงสถิติการใช้งาน, Scenarios ที่กำลังทำงาน, และข้อมูลสำคัญอื่นๆ</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-project-diagram"></i>
+                        <h4>Scenarios</h4>
+                        <p>หน้าจัดการ Scenarios ทั้งหมด สร้างใหม่, แก้ไข, หรือลบ Scenarios</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-history"></i>
+                        <h4>History</h4>
+                        <p>ติดตามประวัติการทำงานของ Scenarios รวมถึงสถานะ Error</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-user-cog"></i>
+                        <h4>Settings</h4>
+                        <p>ตั้งค่าบัญชี, การเรียกเก็บเงิน, และการจัดการทีม</p>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>✨ Free Plan มีอะไรบ้าง?</h4>
+                    <ul>
+                        <li>1,000 Operations ต่อเดือน</li>
+                        <li>สร้าง Scenarios ได้ไม่จำกัด</li>
+                        <li>เข้าถึง Apps ทั้งหมด</li>
+                        <li>การรันทุก 15 นาที</li>
+                        <li>ขนาดไฟล์สูงสุด 5 MB</li>
+                        <li>เก็บ Log 30 วัน</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 3: ส่วนประกอบของ Make -->
+            <div class="slide" id="slide-2">
+                <div id="slide-content-2"></div>
+            </div>
+
+            <!-- Slide 4: การสร้าง Scenario แรก -->
+            <div class="slide" id="slide-3">
+                <div id="slide-content-3"></div>
+            </div>
+
+            <!-- Slide 5: Modules และ Apps -->
+            <div class="slide" id="slide-4">
+                <div id="slide-content-4"></div>
+            </div>
+
+            <!-- Slide 6: การเชื่อมต่อ Services -->
+            <div class="slide" id="slide-5">
+                <div id="slide-content-5"></div>
+            </div>
+
+            <!-- Slide 7: Data Mapping -->
+            <div class="slide" id="slide-6">
+                <div id="slide-content-6"></div>
+            </div>
+
+            <!-- Slide 8: Filters และ Routers -->
+            <div class="slide" id="slide-7">
+                <div id="slide-content-7"></div>
+            </div>
+
+            <!-- Slide 9: Error Handling -->
+            <div class="slide" id="slide-8">
+                <div id="slide-content-8"></div>
+            </div>
+
+            <!-- Slide 10: การทดสอบ Scenario -->
+            <div class="slide" id="slide-9">
+                <div id="slide-content-9"></div>
+            </div>
+
+            <!-- Slide 11: Scheduling -->
+            <div class="slide" id="slide-10">
+                <div id="slide-content-10"></div>
+            </div>
+
+            <!-- Slide 12: Webhooks -->
+            <div class="slide" id="slide-11">
+                <div id="slide-content-11"></div>
+            </div>
+
+            <!-- Slide 13: Advanced Features -->
+            <div class="slide" id="slide-12">
+                <div id="slide-content-12"></div>
+            </div>
+
+            <!-- Slide 14: Best Practices -->
+            <div class="slide" id="slide-13">
+                <div id="slide-content-13"></div>
+            </div>
+
+            <!-- Slide 15: ตัวอย่างการใช้งานจริง -->
+            <div class="slide" id="slide-14">
+                <div id="slide-content-14"></div>
+            </div>
+
+            <!-- Slide 16: Troubleshooting -->
+            <div class="slide" id="slide-15">
+                <div id="slide-content-15"></div>
+            </div>
+
+            <!-- Slide 17: Security & Privacy -->
+            <div class="slide" id="slide-16">
+                <div id="slide-content-16"></div>
+            </div>
+
+            <!-- Slide 18: Quiz -->
+            <div class="slide" id="slide-17">
+                <div id="slide-content-17"></div>
+            </div>
+
+            <!-- Slide 19: Quiz ท้ายบทเรียน -->
+            <div class="slide" id="slide-18">
+                <div id="slide-content-18"></div>
+            </div>
+
+            <!-- Slide 20: สรุปและขั้นตอนถัดไป -->
+            <div class="slide" id="slide-19">
+                <div id="slide-content-19"></div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="slide-navigation">
+                <button class="nav-btn prev-btn" id="prevBtn" disabled>
+                    <i class="fas fa-chevron-left"></i>
+                    ย้อนกลับ
+                </button>
+                <button class="nav-btn next-btn" id="nextBtn">
+                    ถัดไป
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Include external slides data -->
+    <script src="slides-data.js"></script>
+    <script>
+        class MakeELearning {
+            constructor() {
+                this.currentSlide = 0;
+                this.totalSlides = 20;
+                this.completedSlides = new Set();
+                this.quizAnswers = {};
+                
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.updateProgress();
+                this.updateSlideCounter();
+                this.createAllSlides();
+            }
+
+            setupEventListeners() {
+                // Navigation buttons
+                document.getElementById('prevBtn').addEventListener('click', () => this.previousSlide());
+                document.getElementById('nextBtn').addEventListener('click', () => this.nextSlide());
+
+                // Chapter links
+                document.querySelectorAll('.chapter-link').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const slideIndex = parseInt(link.getAttribute('data-slide'));
+                        this.goToSlide(slideIndex);
+                    });
+                });
+
+                // Keyboard navigation
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowLeft') this.previousSlide();
+                    if (e.key === 'ArrowRight') this.nextSlide();
+                });
+            }
+
+            createAllSlides() {
+                // Load content for slides 2-19 from external data
+                if (typeof slidesData !== 'undefined') {
+                    slidesData.forEach(slide => {
+                        const slideElement = document.getElementById(`slide-content-${slide.id}`);
+                        if (slideElement) {
+                            slideElement.innerHTML = slide.content;
+                        }
+                    });
+                }
+                
+                // Add quiz functionality
+                this.addQuizFunctionality();
+            }
+
+            addQuizFunctionality() {
+                document.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('quiz-option')) {
+                        const question = e.target.getAttribute('data-question');
+                        const answer = e.target.getAttribute('data-answer');
+                        
+                        // Remove previous selections
+                        document.querySelectorAll(`[data-question="${question}"]`).forEach(option => {
+                            option.classList.remove('selected', 'correct', 'incorrect');
+                        });
+
+                        // Mark selection
+                        e.target.classList.add('selected');
+                        
+                        // Show result after 1 second
+                        setTimeout(() => {
+                            if (answer === 'correct') {
+                                e.target.classList.add('correct');
+                            } else {
+                                e.target.classList.add('incorrect');
+                                // Show correct answer
+                                document.querySelector(`[data-question="${question}"][data-answer="correct"]`).classList.add('correct');
+                            }
+                            
+                            // Show explanation
+                            const resultDiv = document.getElementById(`quiz-result-${question}`);
+                            if (resultDiv) {
+                                resultDiv.style.display = 'block';
+                            }
+                        }, 1000);
+
+                        this.quizAnswers[question] = answer;
+                    }
+                });
+            }
+
+            goToSlide(index) {
+                if (index < 0 || index >= this.totalSlides) return;
+
+                // Hide current slide
+                document.querySelector('.slide.active').classList.remove('active');
+                
+                // Show new slide
+                const newSlide = document.getElementById(`slide-${index}`);
+                if (newSlide) {
+                    newSlide.classList.add('active');
+                }
+
+                // Update current slide
+                this.currentSlide = index;
+                this.completedSlides.add(index);
+
+                // Update UI
+                this.updateProgress();
+                this.updateSlideCounter();
+                this.updateNavigation();
+                this.updateChapterList();
+
+                // Scroll to top
+                window.scrollTo(0, 0);
+            }
+
+            nextSlide() {
+                if (this.currentSlide < this.totalSlides - 1) {
+                    this.goToSlide(this.currentSlide + 1);
+                }
+            }
+
+            previousSlide() {
+                if (this.currentSlide > 0) {
+                    this.goToSlide(this.currentSlide - 1);
+                }
+            }
+
+            updateProgress() {
+                const progress = ((this.currentSlide + 1) / this.totalSlides) * 100;
+                document.getElementById('progressFill').style.width = `${progress}%`;
+            }
+
+            updateSlideCounter() {
+                document.getElementById('slideCounter').textContent = `${this.currentSlide + 1} / ${this.totalSlides}`;
+            }
+
+            updateNavigation() {
+                const prevBtn = document.getElementById('prevBtn');
+                const nextBtn = document.getElementById('nextBtn');
+
+                prevBtn.disabled = this.currentSlide === 0;
+                nextBtn.disabled = this.currentSlide === this.totalSlides - 1;
+
+                if (this.currentSlide === this.totalSlides - 1) {
+                    nextBtn.innerHTML = '<i class="fas fa-check"></i> เสร็จสิ้น';
+                } else {
+                    nextBtn.innerHTML = 'ถัดไป <i class="fas fa-chevron-right"></i>';
+                }
+            }
+
+            updateChapterList() {
+                document.querySelectorAll('.chapter-link').forEach((link, index) => {
+                    link.classList.remove('active', 'completed');
+                    
+                    if (index === this.currentSlide) {
+                        link.classList.add('active');
+                    } else if (this.completedSlides.has(index)) {
+                        link.classList.add('completed');
+                    }
+                });
+            }
+        }
+
+        // Initialize the e-learning system when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new MakeELearning();
+            console.log('🚀 Make.com E-Learning System initialized!');
+        });
+    </script>
+</body>
+</html>
