@@ -14,7 +14,7 @@
 
         body {
             font-family: 'Sarabun', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Added Sarabun for Thai */
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             min-height: 100vh;
             padding: 20px;
             display: flex;
@@ -35,10 +35,20 @@
 
         /* Header section with gradient background */
         .header {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
             color: white;
             padding: 30px;
             text-align: center;
+            position: relative;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
         }
 
         .header h1 {
@@ -95,9 +105,9 @@
         .form-group select:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: #4facfe;
+            border-color: #3b82f6;
             background: white;
-            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.2);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
         }
 
         textarea {
@@ -106,7 +116,7 @@
         
         /* Submit button styling */
         .submit-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
             color: white;
             padding: 15px 40px;
             border: none;
@@ -141,13 +151,13 @@
         }
         
         .loading {
-            border-color: #4facfe;
+            border-color: #3b82f6;
             background: #f8f9fa;
         }
 
         .spinner {
             border: 4px solid #f3f3f3;
-            border-top: 4px solid #4facfe;
+            border-top: 4px solid #3b82f6;
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -199,6 +209,7 @@
 
     <div class="container">
         <div class="header">
+            <img src="Logo.png" alt="Company Logo" class="logo">
             <h1>📝 แบบฟอร์มส่งข้อมูลโครงงาน</h1>
             <p>กรุณากรอกรายละเอียดโครงงานและระดับชั้นให้ครบถ้วน</p>
         </div>
@@ -243,6 +254,17 @@
             
             <div id="successBox" class="status-box success-message">
                 <strong>✅ สำเร็จ!</strong> ข้อมูลของคุณถูกส่งเรียบร้อยแล้ว
+                <div style="margin-top: 15px;">
+                    <p>📋 คลิกที่ลิงก์ด้านล่างเพื่อดูเนื้อหา:</p>
+                    <a href="https://docs.google.com/spreadsheets/d/1qN3E4nGLC5ZsDOD6elzbW3xl7ROxPxo3W6YEhO_7VQk/edit?gid=1883354165#gid=1883354165" 
+                       target="_blank" 
+                       style="display: inline-block; margin-top: 10px; padding: 10px 20px; background: #3b82f6; color: white; text-decoration: none; border-radius: 8px; font-weight: 600;">
+                        🔗 ดูข้อมูลใน Google Drive
+                    </a>
+                    <p style="margin-top: 15px; color: #666; font-size: 0.95rem;">
+                        ⏱️ รอประมาณ 1-2 นาทีเพื่อให้ระบบประมวลผลไปยังไดร์ฟ
+                    </p>
+                </div>
             </div>
 
             <div id="errorBox" class="status-box error-message">
