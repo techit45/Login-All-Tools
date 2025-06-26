@@ -70,6 +70,44 @@
             margin: 0 auto;
             padding: 20px;
         }
+        /* Corporate Navigation */
+        .navbar {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 0 0 16px 16px;
+            box-shadow: var(--shadow-lg);
+        }
+        .navbar .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .navbar .nav-left img {
+            height: 40px;
+        }
+
+        .navbar .logo-text {
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+        .navbar a {
+            color: white;
+            margin-left: 20px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
 
         /* Clean Professional Header */
         .header {
@@ -447,6 +485,16 @@
 <body>
     <!-- Main Container -->
     <div class="container">
+        <nav class="navbar">
+            <div class="nav-left">
+                <img src="logo.png" alt="Company Logo">
+                <span class="logo-text">Login All Tools</span>
+            </div>
+            <div class="nav-links">
+                <a href="#">หน้าหลัก</a>
+                <a href="#tools">เครื่องมือ</a>
+            </div>
+        </nav>
         <!-- User Info -->
         <div class="user-info">
             <i class="fas fa-user-circle"></i>
@@ -455,14 +503,14 @@
 
         <!-- Header -->
         <header class="header">
-            <img src="Logo.png" alt="Company Logo" class="company-logo">
+            <img src="logo.png" alt="Company Logo" class="company-logo">
             <h1>Login All Tools - ศูนย์รวมเครื่องมือทั้งหมด</h1>
             <p>ระบบรวมเครื่องมือสำหรับการเรียนการสอนและการจัดการโครงงาน</p>
             <div class="clock" id="clock"></div>
         </header>
 
         <!-- Main Content - Tool Grid -->
-        <main class="tools-grid">
+        <main id="tools" class="tools-grid">
             <!-- ContentW2D Tool -->
             <div class="tool-card content-card" data-tool-id="contentw2d">
                 <i class="fas fa-lightbulb"></i>
