@@ -16,437 +16,164 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
-    <style>
-        /* Clean Company Color Variables */
-        :root {
-            --primary-gradient: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-            --secondary-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            --success-gradient: linear-gradient(135deg, #059669 0%, #10b981 100%);
-            --error-gradient: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
-            --warning-gradient: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
-            
-            --primary-color: #1e40af;
-            --secondary-color: #3b82f6;
-            --accent-color: #2563eb;
-            --background-color: #f8fafc;
-            --card-background: rgba(255, 255, 255, 0.95);
-            --text-primary: #1e293b;
-            --text-secondary: #64748b;
-            --text-muted: #94a3b8;
-            --border-color: rgba(148, 163, 184, 0.2);
-            --error-color: #dc2626;
-            --success-color: #059669;
-            --warning-color: #d97706;
-            
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
+<style>
+    :root {
+        --primary: #2563eb;
+        --primary-dark: #1e40af;
+        --background: #f0f4ff;
+        --text-primary: #1e293b;
+        --text-secondary: #475569;
+        --card-bg: #ffffff;
+    }
 
-        /* Global Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Sarabun', sans-serif;
-        }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Inter','Sarabun',sans-serif;
+    }
 
-        body {
-            background: var(--background-color);
-            background-image: 
-                radial-gradient(circle at 20% 80%, rgba(30, 64, 175, 0.03) 0%, transparent 70%),
-                radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.03) 0%, transparent 70%);
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-            font-family: 'Inter', 'Sarabun', sans-serif;
-            line-height: 1.6;
-        }
+    body {
+        background: var(--background);
+        color: var(--text-primary);
+        min-height: 100vh;
+    }
 
-        /* Layout */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+    .navbar {
+        background: var(--primary);
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        border-radius: 0 0 12px 12px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .navbar .brand {
+        display: flex;
+        align-items: center;
+    }
+    .navbar img {
+        height: 40px;
+        margin-right: .5rem;
+    }
+    .navbar a {
+        color: #fff;
+        margin-left: 1rem;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .navbar a:hover { text-decoration: underline; }
 
-        /* Clean Professional Header */
-        .header {
-            background: var(--card-background);
-            padding: 40px;
-            text-align: center;
-            border-radius: 16px;
-            box-shadow: var(--shadow-lg);
-            margin-bottom: 40px;
-            position: relative;
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-        }
+    .hero {
+        text-align: center;
+        padding: 4rem 1rem;
+        background: linear-gradient(135deg,var(--primary-dark),var(--primary));
+        color: #fff;
+        border-radius: 0 0 20px 20px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .hero h1 { font-size: 2.5rem; margin-bottom: .5rem; }
+    .hero p { font-size: 1.1rem; opacity: 0.9; }
 
-        .company-logo {
-            position: absolute;
-            top: 20px;
-            left: 30px;
-            width: 60px;
-            height: 60px;
-            object-fit: contain;
-            opacity: 0.9;
-        }
-        
-        .header:hover {
-            box-shadow: var(--shadow-xl);
-            transform: translateY(-2px);
-        }
+    .user-info {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: #fff;
+        padding: .5rem 1rem;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        font-weight: 500;
+    }
+    .user-info i { color: var(--primary); }
 
-        .header h1 {
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 16px;
-            font-size: 2.5em;
-            font-weight: 700;
-            text-shadow: none;
-            letter-spacing: -0.5px;
-        }
-        
-        .header p {
-            font-size: 1.1em;
-            color: var(--text-secondary);
-            font-weight: 500;
-            margin-bottom: 20px;
-        }
+    .tools-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        padding: 40px 0;
+    }
 
-        /* User Info */
-        .user-info {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: var(--card-background);
-            padding: 10px 20px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            backdrop-filter: blur(10px);
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-            z-index: 10;
-        }
-        
-        .user-info:hover {
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-lg);
-        }
+    .tool-card {
+        background: var(--card-bg);
+        border-radius: 12px;
+        padding: 30px;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: transform .2s, box-shadow .2s;
+    }
+    .tool-card:hover { transform: translateY(-4px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
+    .tool-card i { font-size: 2.2rem; margin-bottom: .75rem; color: var(--primary); }
+    .tool-card h3 { font-size: 1.25rem; margin-bottom: .5rem; }
+    .tool-card p { font-size: .95rem; color: var(--text-secondary); min-height: 60px; }
 
-        .user-info i {
-            color: var(--primary-color);
-            font-size: 1.2em;
-        }
-        
-        .user-info span {
-            color: var(--text-primary);
-            font-weight: 600;
-            font-size: 1em;
-        }
+    .tool-link {
+        display: inline-block;
+        margin-top: 1rem;
+        padding: .6rem 1.2rem;
+        background: var(--primary);
+        color: #fff;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .tool-link:hover { background: var(--primary-dark); }
 
-        /* Clock */
-        .clock {
-            font-size: 1.1em;
-            margin-top: 12px;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
+    .footer {
+        text-align: center;
+        margin-top: 60px;
+        padding: 20px 10px;
+        font-size: .9rem;
+        color: var(--text-secondary);
+    }
 
-        /* Tools Grid */
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-            perspective: 1200px;
-            position: relative;
-        }
+    .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); }
+    .modal-content {
+        background:#fff;
+        margin:5% auto;
+        width:90%;
+        max-width:1000px;
+        border-radius:12px;
+        overflow:hidden;
+        height:80vh;
+        display:flex;
+        flex-direction:column;
+    }
+    .modal-header {
+        background:var(--primary);
+        color:#fff;
+        padding:1rem;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+    }
+    .modal-header h2 { font-size:1.2rem; }
+    .close { cursor:pointer; font-size:1.5rem; line-height:1; }
+    .modal-body { flex:1; }
+    .modal-iframe { width:100%; height:100%; border:0; }
 
-        /* Professional Tool Cards */
-        .tool-card {
-            background: var(--card-background);
-            border-radius: 16px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: var(--shadow-md);
-            transition: all 0.3s ease;
-            position: relative;
-            backdrop-filter: blur(10px);
-            animation: fadeIn 0.6s ease forwards;
-            opacity: 0;
-            border: 1px solid var(--border-color);
-            cursor: pointer;
-        }
-        
-        .tool-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--primary-gradient);
-            transform: scaleX(0);
-            transition: all 0.3s ease;
-            border-radius: 16px 16px 0 0;
-        }
-        
-        .tool-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .tool-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-xl);
-            border-color: var(--primary-color);
-        }
-
-        .tool-card i {
-            font-size: 3em;
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-        }
-
-        .tool-card:hover i {
-            transform: scale(1.1) translateY(-4px);
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
-        }
-
-        .tool-card h3 {
-            color: var(--text-primary);
-            margin-bottom: 16px;
-            font-size: 1.5em;
-            font-weight: 600;
-            line-height: 1.3;
-        }
-
-        .tool-card p {
-            color: var(--text-secondary);
-            margin-bottom: 24px;
-            min-height: 72px;
-            line-height: 1.6;
-            font-size: 1em;
-            font-weight: 400;
-        }
-
-        /* Professional Tool Links */
-        .tool-link {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 24px;
-            background: var(--primary-gradient);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            width: 100%;
-            margin-bottom: 10px;
-            font-weight: 600;
-            font-size: 0.95em;
-            box-shadow: var(--shadow-sm);
-            border: none;
-        }
-        
-        .tool-link::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s ease;
-        }
-        
-        .tool-link:hover::before {
-            left: 100%;
-        }
-
-        .tool-link:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-            background: var(--secondary-gradient);
-        }
-
-        .tool-link.clicked {
-            transform: scale(0.98);
-        }
-        
-        .tool-link i {
-            margin-right: 8px;
-            font-size: 1em;
-            transition: transform 0.2s ease;
-        }
-        
-        .tool-link:hover i {
-            transform: translateX(2px);
-        }
-
-        /* Card icon colors */
-        .content-card i { color: var(--warning-color); }
-        .login-card i { color: var(--success-color); }
-        .teach-card i { color: var(--accent-color); }
-        .meta-card i { color: var(--secondary-color); }
-        .bill-card i { color: var(--error-color); }
-        
-        /* Special link colors */
-        .content-card .tool-link:nth-child(3) { background: var(--warning-gradient); }
-        .login-card .tool-link:nth-child(3) { background: var(--success-gradient); }
-        .teach-card .tool-link:nth-child(3) { background: linear-gradient(135deg, var(--accent-color), var(--primary-color)); }
-        .meta-card .tool-link:nth-child(3) { background: var(--secondary-gradient); }
-        .bill-card .tool-link:nth-child(3) { background: var(--error-gradient); }
-
-        /* Professional Footer */
-        .footer {
-            text-align: center;
-            margin-top: 50px;
-            padding: 30px;
-            color: var(--text-secondary);
-            background: var(--card-background);
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--border-color);
-        }
-        
-        .footer p {
-            margin-bottom: 8px;
-            font-size: 1em;
-        }
-        
-        .footer p:first-child {
-            color: var(--text-primary);
-            font-weight: 600;
-            font-size: 1.1em;
-        }
-        
-        .footer p:last-child {
-            margin-bottom: 0;
-            opacity: 0.8;
-            font-size: 0.9em;
-        }
-
-        /* Simple Animations */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Clean Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-content {
-            background: var(--card-background);
-            margin: 5% auto;
-            padding: 0;
-            border-radius: 16px;
-            width: 90%;
-            max-width: 1200px;
-            height: 80vh;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-xl);
-            backdrop-filter: blur(10px);
-        }
-
-        .modal-header {
-            background: var(--primary-gradient);
-            color: white;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .modal-header h2 {
-            font-size: 1.3em;
-            font-weight: 600;
-        }
-
-        .close {
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            cursor: pointer;
-            line-height: 1;
-            transition: all 0.2s ease;
-            padding: 4px;
-            border-radius: 4px;
-        }
-
-        .close:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: scale(1.1);
-        }
-
-        .modal-body {
-            height: calc(100% - 60px);
-            overflow: hidden;
-        }
-
-        .modal-iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: 0 0 16px 16px;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2em;
-            }
-            .user-info {
-                position: relative;
-                top: 0;
-                right: 0;
-                margin-bottom: 20px;
-                justify-content: center;
-            }
-            .tool-card {
-                margin: 0 10px;
-            }
-            .modal-content {
-                width: 95%;
-                height: 90vh;
-                margin: 2.5% auto;
-            }
-        }
-    </style>
+    @media (max-width:600px) {
+        .hero h1 { font-size:2rem; }
+    }
+</style>
 </head>
 <body>
     <!-- Main Container -->
     <div class="container">
+        <nav class="navbar">
+            <div class="brand">
+                <img src="logo.png" alt="Company Logo">
+                <span class="logo-text">Login All Tools</span>
+            </div>
+            <div class="nav-links">
+                <a href="#">หน้าหลัก</a>
+                <a href="#tools">เครื่องมือ</a>
+            </div>
+        </nav>
         <!-- User Info -->
         <div class="user-info">
             <i class="fas fa-user-circle"></i>
@@ -454,15 +181,15 @@
         </div>
 
         <!-- Header -->
-        <header class="header">
-            <img src="Logo.png" alt="Company Logo" class="company-logo">
+        <header class="hero">
+            <img style="height:80px;margin-bottom:1rem;" src="logo.png" alt="Company Logo">
             <h1>Login All Tools - ศูนย์รวมเครื่องมือทั้งหมด</h1>
-            <p>ระบบรวมเครื่องมือสำหรับการเรียนการสอนและการจัดการโครงงาน</p>
+            <p>รวมเครื่องมือสะดวกใช้งานในที่เดียว</p>
             <div class="clock" id="clock"></div>
         </header>
 
         <!-- Main Content - Tool Grid -->
-        <main class="tools-grid">
+        <main id="tools" class="tools-grid">
             <!-- ContentW2D Tool -->
             <div class="tool-card content-card" data-tool-id="contentw2d">
                 <i class="fas fa-lightbulb"></i>
