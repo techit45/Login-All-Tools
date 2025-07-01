@@ -28,7 +28,7 @@
 
 ### 4. เปิดใช้งาน Webhook
 1. ใน N8N เปิด node "Webhook Trigger"
-2. คัดลอก URL (จะเป็น `http://localhost:5678/webhook-test/payment-process`)
+2. คัดลอก URL (จะเป็น `https://techit-n8n.ngrok-free.app/webhook-test/payment-process`)
 3. ตรวจสอบว่า URL ใน HTML ตรงกัน (บรรทัดที่ 965)
 
 ### 5. ทดสอบระบบ

@@ -3388,7 +3388,7 @@
             // แสดงข้อมูลใน console สำหรับการ debug
             console.log('ข้อมูลที่จะส่ง:', submitData);
             
-            const response = await fetch('http://localhost:5678/webhook/payment-process', {
+            const response = await fetch('https://techit-n8n.ngrok-free.app/webhook/payment-process', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -3473,7 +3473,7 @@
                     
                     console.log(`📤 ส่งไฟล์ที่ ${fileNumber}/${totalFiles}:`, singleFileData);
                     
-                    const response = await fetch('http://localhost:5678/webhook/payment-process', {
+                    const response = await fetch('https://techit-n8n.ngrok-free.app/webhook/payment-process', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
