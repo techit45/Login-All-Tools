@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบสำคัญจ่าย - Payment Slip Processing System</title>
+    <title>ระบบสำคัญจ่าย - Payment Slip Processing System v2025.07.01</title>
+    <!-- Force browser refresh - Updated: 2025-07-01 -->
     <style>
         /* ==================== CSS Styles ==================== */
         * {
@@ -3397,40 +3398,52 @@
             // แสดงข้อมูลใน console สำหรับการ debug
             console.log('ข้อมูลที่จะส่ง:', submitData);
             
-            // GitHub Pages deployment - webhook disabled
-            console.log('📤 ข้อมูลที่จะส่ง (webhook disabled):', submitData);
+            // Send data to N8N webhook - VERSION 2025.07.01 UPDATED
+            console.log('🔥 WEBHOOK ENABLED - VERSION 2025.07.01');
+            console.log('📤 เชื่อมต่อไป N8N:', 'https://techit-n8n.ngrok-free.app/webhook/payment-process');
+            console.log('📤 ข้อมูลที่จะส่ง:', submitData);
             
-            // Simulate successful response for GitHub Pages
-            const response = {
-                ok: true,
-                json: async () => ({ 
-                    success: true, 
-                    message: 'ข้อมูลได้รับการบันทึกเรียบร้อย (โหมดสาธิต)',
-                    data: submitData 
-                })
-            };
-            
-            showProgress(75);
-            
-            if (response.ok) {
-                const result = await response.json();
-                showProgress(100);
+            try {
+                const response = await fetch('https://techit-n8n.ngrok-free.app/webhook/payment-process', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'ngrok-skip-browser-warning': 'true'
+                    },
+                    body: JSON.stringify(submitData)
+                });
                 
-                setTimeout(() => {
-                    showLoading(false);
-                    showResult('✅ ส่งข้อมูลสำเร็จ! ระบบได้รับข้อมูลการจ่ายเงินแล้ว', 'success');
+                console.log('📡 Response Status:', response.status, response.statusText);
+                showProgress(75);
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('✅ N8N Response:', result);
+                    showProgress(100);
                     
-                    // ทำ OCR และอัปเดต sidebar เบื้องหลัง
-                    const ocrProcessingData = {
-                        entries: submitData.entries,
-                        userType: submitData.userType
-                    };
-                    processOCRInBackground(ocrProcessingData);
-                    
-                    resetAllEntries();
-                }, 500);
-            } else {
-                throw new Error(`HTTP Error: ${response.status} - ${response.statusText}`);
+                    setTimeout(() => {
+                        showLoading(false);
+                        showResult('✅ ส่งข้อมูลสำเร็จ! ระบบได้รับข้อมูลการจ่ายเงินแล้ว', 'success');
+                        
+                        // ทำ OCR และอัปเดต sidebar เบื้องหลัง
+                        const ocrProcessingData = {
+                            entries: submitData.entries,
+                            userType: submitData.userType
+                        };
+                        processOCRInBackground(ocrProcessingData);
+                        
+                        resetAllEntries();
+                    }, 500);
+                } else {
+                    console.error('❌ Webhook Error:', response.status, response.statusText);
+                    const errorText = await response.text();
+                    console.error('❌ Error Response:', errorText);
+                    throw new Error(`HTTP Error: ${response.status} - ${response.statusText}`);
+                }
+            } catch (networkError) {
+                console.error('❌ Network Error:', networkError);
+                console.error('❌ ไม่สามารถเชื่อมต่อไป N8N ได้ - ตรวจสอบ ngrok และ N8N');
+                throw new Error(`Network Error: ${networkError.message}`);
             }
         }
         
@@ -3487,18 +3500,17 @@
                     
                     console.log(`📤 ส่งไฟล์ที่ ${fileNumber}/${totalFiles}:`, singleFileData);
                     
-                    // GitHub Pages deployment - webhook disabled
-                    console.log(`📤 ไฟล์ที่ ${fileNumber}/${totalFiles} (webhook disabled):`, singleFileData);
+                    // Send data to N8N webhook  
+                    console.log(`📤 ส่งไฟล์ที่ ${fileNumber}/${totalFiles} ไปยัง N8N:`, singleFileData);
                     
-                    // Simulate successful response for GitHub Pages
-                    const response = {
-                        ok: true,
-                        json: async () => ({ 
-                            success: true, 
-                            message: `ไฟล์ที่ ${fileNumber} ได้รับการบันทึกเรียบร้อย (โหมดสาธิต)`,
-                            data: singleFileData 
-                        })
-                    };
+                    const response = await fetch('https://techit-n8n.ngrok-free.app/webhook/payment-process', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'ngrok-skip-browser-warning': 'true'
+                        },
+                        body: JSON.stringify(singleFileData)
+                    });
                     
                     if (response.ok) {
                         const result = await response.json();
